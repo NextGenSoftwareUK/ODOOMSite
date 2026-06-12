@@ -1,0 +1,1464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ODOOM — OASIS-Powered Doom | Find the Keycard</title>
+  <meta name="description" content="ODOOM is a modified UZDoom integrated with the OASIS Omniverse. Classic Doom gameplay where real-world GPS locations in parks hide keycards, weapons, and armour. AR demon combat coming soon." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #030714;
+      --red: #ff3355;
+      --cyan: #00e5ff;
+      --gold: #f0a500;
+      --orange: #ff6633;
+      --text: #a8bfd8;
+      --text-bright: #e8f4ff;
+      --card-bg: rgba(10, 15, 35, 0.85);
+      --border: rgba(255, 51, 85, 0.25);
+      --border-cyan: rgba(0, 229, 255, 0.3);
+      --border-gold: rgba(240, 165, 0, 0.35);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 17px;
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+
+    /* CRT scanline overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 0, 0, 0.04) 2px,
+        rgba(0, 0, 0, 0.04) 4px
+      );
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* Star canvas */
+    #star-canvas {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2.5rem;
+      height: 68px;
+      background: rgba(3, 7, 20, 0.75);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+    }
+
+    .nav-logo-text {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 900;
+      color: var(--red);
+      letter-spacing: 0.12em;
+      text-shadow: 0 0 18px rgba(255, 51, 85, 0.6);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      color: var(--text);
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--red); }
+
+    .btn-nav {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 0.45rem 1.1rem;
+      border: 1px solid var(--red);
+      color: var(--red);
+      background: transparent;
+      border-radius: 3px;
+      transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    }
+
+    .btn-nav:hover {
+      background: var(--red);
+      color: #fff;
+      box-shadow: 0 0 18px rgba(255, 51, 85, 0.5);
+    }
+
+    /* HERO */
+    #hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .hero-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 3rem;
+      max-width: 1200px;
+      width: 100%;
+      padding: 0 2.5rem;
+      margin-top: 68px;
+    }
+
+    .hero-text { flex: 1; min-width: 0; }
+
+    .hero-kicker {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      color: var(--red);
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .hero-kicker::before {
+      content: '';
+      display: inline-block;
+      width: 28px;
+      height: 2px;
+      background: var(--red);
+    }
+
+    .hero-h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(2.6rem, 5.5vw, 4.2rem);
+      font-weight: 900;
+      line-height: 1.1;
+      color: var(--text-bright);
+      letter-spacing: 0.03em;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-h1 span {
+      color: var(--red);
+      text-shadow: 0 0 30px rgba(255, 51, 85, 0.55);
+    }
+
+    .hero-sub {
+      font-size: 1.15rem;
+      color: var(--text);
+      max-width: 520px;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .btn-primary {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 0.85rem 1.75rem;
+      background: var(--red);
+      color: #fff;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+
+    .btn-primary:hover {
+      box-shadow: 0 0 28px rgba(255, 51, 85, 0.65);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 0.85rem 1.75rem;
+      background: transparent;
+      color: var(--text-bright);
+      border: 1px solid rgba(168, 191, 216, 0.4);
+      border-radius: 3px;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s, transform 0.2s;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--cyan);
+      color: var(--cyan);
+      transform: translateY(-2px);
+    }
+
+    .hero-svg-wrap {
+      flex-shrink: 0;
+      width: clamp(280px, 40vw, 480px);
+    }
+
+    /* SECTIONS */
+    section {
+      position: relative;
+      z-index: 1;
+    }
+
+    .section-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 6rem 2.5rem;
+    }
+
+    .section-label {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.28em;
+      color: var(--red);
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+
+    .section-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(1.7rem, 3.5vw, 2.6rem);
+      font-weight: 700;
+      color: var(--text-bright);
+      line-height: 1.2;
+      margin-bottom: 1.25rem;
+    }
+
+    .section-intro {
+      font-size: 1.05rem;
+      color: var(--text);
+      max-width: 640px;
+      margin-bottom: 3rem;
+    }
+
+    /* ABOUT */
+    #about { background: linear-gradient(180deg, var(--bg) 0%, rgba(8,12,30,0.9) 100%); }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .about-text p {
+      color: var(--text);
+      margin-bottom: 1.25rem;
+      font-size: 1.05rem;
+    }
+
+    .about-text a {
+      color: var(--cyan);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(0, 229, 255, 0.3);
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .about-text a:hover {
+      color: var(--text-bright);
+      border-color: var(--text-bright);
+    }
+
+    .about-text .gold-link {
+      color: var(--gold);
+      border-bottom-color: rgba(240, 165, 0, 0.35);
+    }
+
+    .about-text .gold-link:hover {
+      color: var(--text-bright);
+    }
+
+    .hud-card {
+      background: rgba(3, 7, 20, 0.95);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.75rem;
+      font-family: 'Share Tech Mono', monospace;
+      box-shadow: 0 0 40px rgba(255, 51, 85, 0.12), inset 0 0 30px rgba(255, 51, 85, 0.04);
+    }
+
+    .hud-card-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      color: var(--red);
+      text-transform: uppercase;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hud-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 0.45rem 0;
+      border-bottom: 1px solid rgba(255, 51, 85, 0.08);
+      font-size: 0.82rem;
+    }
+
+    .hud-row:last-child { border-bottom: none; }
+
+    .hud-label { color: rgba(168, 191, 216, 0.7); }
+
+    .hud-value {
+      color: var(--red);
+      font-weight: 600;
+      font-size: 0.88rem;
+    }
+
+    .hud-value.cyan { color: var(--cyan); }
+    .hud-value.gold { color: var(--gold); }
+
+    /* FEATURES */
+    #features { background: var(--bg); }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .feature-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.75rem;
+      transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
+      will-change: transform;
+    }
+
+    .feature-card:hover {
+      border-color: rgba(255, 51, 85, 0.6);
+      box-shadow: 0 8px 32px rgba(255, 51, 85, 0.18);
+      transform: translateY(-4px);
+    }
+
+    .feature-card.coming-soon {
+      border-color: var(--border-cyan);
+    }
+
+    .feature-card.coming-soon:hover {
+      border-color: rgba(0, 229, 255, 0.7);
+      box-shadow: 0 8px 32px rgba(0, 229, 255, 0.18);
+    }
+
+    .feature-card.coming-soon .feature-title { color: var(--cyan); }
+
+    .feature-icon {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .feature-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--text-bright);
+      text-transform: uppercase;
+      margin-bottom: 0.6rem;
+    }
+
+    .feature-desc {
+      font-size: 0.95rem;
+      color: var(--text);
+      line-height: 1.55;
+    }
+
+    .feature-desc a {
+      color: var(--cyan);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(0, 229, 255, 0.25);
+    }
+
+    .feature-desc a:hover {
+      color: var(--text-bright);
+      border-color: var(--text-bright);
+    }
+
+    .feature-badge {
+      display: inline-block;
+      margin-top: 0.75rem;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      padding: 0.25rem 0.65rem;
+      border: 1px solid var(--cyan);
+      color: var(--cyan);
+      border-radius: 2px;
+      text-transform: uppercase;
+    }
+
+    /* REAL WORLD */
+    #realworld { background: linear-gradient(180deg, var(--bg) 0%, rgba(6,4,20,0.95) 100%); }
+
+    .rw-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.75rem;
+      margin-bottom: 4rem;
+    }
+
+    .rw-card {
+      background: var(--card-bg);
+      border-radius: 6px;
+      padding: 2rem;
+      border: 1px solid;
+      transition: box-shadow 0.25s, transform 0.25s;
+      will-change: transform;
+    }
+
+    .rw-card.red { border-color: rgba(255, 51, 85, 0.45); }
+    .rw-card.orange { border-color: rgba(255, 102, 51, 0.45); }
+    .rw-card.cyan { border-color: var(--border-cyan); }
+
+    .rw-card:hover { transform: translateY(-4px); }
+    .rw-card.red:hover { box-shadow: 0 8px 30px rgba(255, 51, 85, 0.2); }
+    .rw-card.orange:hover { box-shadow: 0 8px 30px rgba(255, 102, 51, 0.2); }
+    .rw-card.cyan:hover { box-shadow: 0 8px 30px rgba(0, 229, 255, 0.18); }
+
+    .rw-num {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 900;
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .rw-card.red .rw-num { color: var(--red); }
+    .rw-card.orange .rw-num { color: var(--orange); }
+    .rw-card.cyan .rw-num { color: var(--cyan); }
+
+    .rw-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-bright);
+      margin-bottom: 0.75rem;
+    }
+
+    .rw-desc { color: var(--text); font-size: 0.97rem; }
+
+    .how-strip {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0;
+      position: relative;
+    }
+
+    .how-strip::before {
+      content: '';
+      position: absolute;
+      top: 28px;
+      left: 10%;
+      right: 10%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), var(--cyan), var(--border), transparent);
+    }
+
+    .how-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 0 0.5rem;
+    }
+
+    .how-step-num {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: rgba(255, 51, 85, 0.12);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--red);
+      margin-bottom: 1rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .how-step-label {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      color: var(--text-bright);
+      text-transform: uppercase;
+      margin-bottom: 0.35rem;
+    }
+
+    .how-step-desc { font-size: 0.82rem; color: var(--text); }
+
+    /* OGENGINE BAND */
+    #ogengine-band {
+      background: linear-gradient(135deg, rgba(10,8,30,0.98) 0%, rgba(20,14,5,0.98) 100%);
+      border-top: 1px solid var(--border-gold);
+      border-bottom: 1px solid var(--border-gold);
+      position: relative;
+      z-index: 1;
+    }
+
+    .ogengine-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 4rem 2.5rem;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .oge-logo-block { flex-shrink: 0; }
+
+    .oge-wordmark {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: var(--gold);
+      letter-spacing: 0.08em;
+      text-shadow: 0 0 30px rgba(240, 165, 0, 0.45);
+      line-height: 1;
+      margin-bottom: 0.35rem;
+    }
+
+    .oge-sub-label {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.7rem;
+      color: rgba(240, 165, 0, 0.6);
+      letter-spacing: 0.15em;
+    }
+
+    .oge-desc {
+      color: var(--text);
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .oge-desc a {
+      color: var(--gold);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(240, 165, 0, 0.3);
+      transition: color 0.2s;
+    }
+
+    .oge-desc a:hover { color: var(--text-bright); }
+
+    .oge-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .oge-pill {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      padding: 0.3rem 0.75rem;
+      border: 1px solid var(--border-gold);
+      color: var(--gold);
+      border-radius: 2px;
+      text-transform: uppercase;
+    }
+
+    .btn-gold {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 0.75rem 1.5rem;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      background: transparent;
+      border-radius: 3px;
+      transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+      display: inline-block;
+    }
+
+    .btn-gold:hover {
+      background: var(--gold);
+      color: #000;
+      box-shadow: 0 0 20px rgba(240, 165, 0, 0.4);
+    }
+
+    /* ROADMAP */
+    #roadmap { background: var(--bg); }
+
+    .roadmap-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(2, auto);
+      gap: 1.5rem;
+    }
+
+    .rm-tile {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 2rem;
+      transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
+      will-change: transform;
+    }
+
+    .rm-tile:hover {
+      border-color: rgba(255, 51, 85, 0.5);
+      box-shadow: 0 6px 24px rgba(255, 51, 85, 0.15);
+      transform: translateY(-3px);
+    }
+
+    .rm-tile.future {
+      border-style: dashed;
+      border-color: rgba(168, 191, 216, 0.2);
+      background: rgba(5, 8, 20, 0.4);
+    }
+
+    .rm-tile.future:hover {
+      border-color: rgba(168, 191, 216, 0.4);
+      box-shadow: none;
+    }
+
+    .rm-phase {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.68rem;
+      color: rgba(168, 191, 216, 0.5);
+      letter-spacing: 0.15em;
+      margin-bottom: 0.5rem;
+    }
+
+    .rm-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.92rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: var(--text-bright);
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+      line-height: 1.3;
+    }
+
+    .rm-desc { font-size: 0.93rem; color: var(--text); margin-bottom: 1rem; }
+
+    .rm-badge {
+      display: inline-block;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.58rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      padding: 0.22rem 0.65rem;
+      border-radius: 2px;
+      text-transform: uppercase;
+    }
+
+    .rm-badge.in-progress {
+      background: rgba(255, 51, 85, 0.15);
+      border: 1px solid rgba(255, 51, 85, 0.45);
+      color: var(--red);
+    }
+
+    .rm-badge.coming-soon {
+      background: rgba(0, 229, 255, 0.08);
+      border: 1px solid rgba(0, 229, 255, 0.35);
+      color: var(--cyan);
+    }
+
+    .rm-badge.future-badge {
+      background: rgba(168, 191, 216, 0.06);
+      border: 1px solid rgba(168, 191, 216, 0.2);
+      color: rgba(168, 191, 216, 0.5);
+    }
+
+    /* CTA */
+    #cta {
+      background: linear-gradient(135deg, rgba(30,5,15,0.98) 0%, rgba(8,6,28,0.98) 100%);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      z-index: 1;
+    }
+
+    #cta::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 70% at 50% 50%, rgba(255,51,85,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .cta-inner {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 6rem 2.5rem;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cta-inner .section-label { justify-content: center; display: flex; }
+    .cta-inner .section-title { text-align: center; }
+
+    .cta-sub {
+      font-size: 1.1rem;
+      color: var(--text);
+      margin-bottom: 2.5rem;
+    }
+
+    .cta-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    .btn-cyan {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 0.85rem 1.75rem;
+      border: 1px solid var(--cyan);
+      color: var(--cyan);
+      background: transparent;
+      border-radius: 3px;
+      transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    }
+
+    .btn-cyan:hover {
+      background: var(--cyan);
+      color: #000;
+      box-shadow: 0 0 22px rgba(0, 229, 255, 0.4);
+    }
+
+    .btn-gold-filled {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 0.85rem 1.75rem;
+      background: transparent;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      border-radius: 3px;
+      transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    }
+
+    .btn-gold-filled:hover {
+      background: var(--gold);
+      color: #000;
+      box-shadow: 0 0 22px rgba(240, 165, 0, 0.4);
+    }
+
+    /* FOOTER */
+    footer {
+      background: rgba(2, 4, 14, 0.98);
+      border-top: 1px solid var(--border);
+      position: relative;
+      z-index: 1;
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 4rem 2.5rem 2rem;
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: 3rem;
+    }
+
+    .footer-brand {}
+
+    .footer-logo-text {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 900;
+      color: var(--red);
+      letter-spacing: 0.1em;
+      text-shadow: 0 0 18px rgba(255, 51, 85, 0.5);
+      margin-bottom: 0.75rem;
+    }
+
+    .footer-desc {
+      font-size: 0.88rem;
+      color: var(--text);
+      line-height: 1.6;
+      margin-bottom: 1.25rem;
+    }
+
+    .footer-socials {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .social-link {
+      width: 34px;
+      height: 34px;
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.75rem;
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 700;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+    }
+
+    .social-link:hover {
+      border-color: var(--red);
+      color: var(--red);
+      background: rgba(255, 51, 85, 0.08);
+    }
+
+    .footer-col-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      color: var(--text-bright);
+      text-transform: uppercase;
+      margin-bottom: 1.25rem;
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+    }
+
+    .footer-links a {
+      font-size: 0.88rem;
+      color: var(--text);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--red); }
+
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1.5rem 2.5rem;
+      border-top: 1px solid rgba(255, 51, 85, 0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+      color: rgba(168, 191, 216, 0.45);
+    }
+
+    .footer-bottom a {
+      color: rgba(168, 191, 216, 0.45);
+      text-decoration: none;
+    }
+
+    .footer-bottom a:hover { color: var(--text); }
+
+    /* REVEAL */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .hero-inner { flex-direction: column; text-align: center; }
+      .hero-sub { max-width: 100%; }
+      .hero-buttons { justify-content: center; }
+      .about-grid { grid-template-columns: 1fr; }
+      .rw-grid { grid-template-columns: 1fr; }
+      .how-strip { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+      .how-strip::before { display: none; }
+      .ogengine-inner { grid-template-columns: 1fr; gap: 2rem; }
+      .roadmap-grid { grid-template-columns: 1fr 1fr; }
+      .footer-inner { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 600px) {
+      nav { padding: 0 1.25rem; }
+      .nav-links { display: none; }
+      .section-inner { padding: 4rem 1.25rem; }
+      .roadmap-grid { grid-template-columns: 1fr; }
+      .footer-inner { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; gap: 0.5rem; text-align: center; }
+      .how-strip { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="star-canvas"></canvas>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <circle cx="18" cy="18" r="16.5" stroke="#ff3355" stroke-width="1.5"/>
+      <circle cx="18" cy="18" r="10.5" stroke="#ff3355" stroke-width="1" stroke-dasharray="3 2"/>
+      <line x1="18" y1="2" x2="18" y2="8" stroke="#ff3355" stroke-width="1.5"/>
+      <line x1="18" y1="28" x2="18" y2="34" stroke="#ff3355" stroke-width="1.5"/>
+      <line x1="2" y1="18" x2="8" y2="18" stroke="#ff3355" stroke-width="1.5"/>
+      <line x1="28" y1="18" x2="34" y2="18" stroke="#ff3355" stroke-width="1.5"/>
+      <circle cx="18" cy="18" r="3" fill="#ff3355"/>
+    </svg>
+    <span class="nav-logo-text">ODOOM</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#realworld">Real World</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a class="btn-nav" href="https://github.com/NextGenSoftwareUK/OASIS" target="_blank" rel="noopener">GitHub</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="hero-kicker">OASIS-Powered FPS</div>
+      <h1 class="hero-h1">Rip and Tear.<br/><span>Find the Keycard.</span></h1>
+      <p class="hero-sub">Classic Doom gameplay meets real-world adventure. GPS-hidden keycards, weapons, and armour in real parks power your in-game arsenal — with AR demon combat coming to your city soon. Built on UZDoom, powered by the OASIS Omniverse and WEB5 STAR API.</p>
+      <div class="hero-buttons">
+        <a class="btn-primary" href="https://github.com/NextGenSoftwareUK/OASIS/releases/tag/STAR-API-CLIENT-v1.0.0" target="_blank" rel="noopener">Download ODOOM</a>
+        <a class="btn-secondary" href="#features">Explore Features</a>
+        <a class="btn-secondary" href="https://github.com/NextGenSoftwareUK/OASIS" target="_blank" rel="noopener">View on GitHub</a>
+      </div>
+    </div>
+    <div class="hero-svg-wrap">
+      <svg viewBox="0 0 600 700" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:100%;height:auto;display:block;">
+        <defs>
+          <radialGradient id="redGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#ff3355" stop-opacity="0.35"/>
+            <stop offset="100%" stop-color="#ff3355" stop-opacity="0"/>
+          </radialGradient>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="6" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+
+        <!-- Red radial glow -->
+        <ellipse cx="300" cy="350" rx="260" ry="260" fill="url(#redGlow)"/>
+
+        <!-- Outer dashed ring — slow clockwise -->
+        <g style="transform-origin:300px 350px">
+          <animateTransform attributeName="transform" type="rotate" from="0 300 350" to="360 300 350" dur="32s" repeatCount="indefinite"/>
+          <circle cx="300" cy="350" r="240" fill="none" stroke="#ff3355" stroke-width="1.2" stroke-dasharray="8 6" opacity="0.5"/>
+        </g>
+
+        <!-- Mid dashed ring — counter-rotate -->
+        <g style="transform-origin:300px 350px">
+          <animateTransform attributeName="transform" type="rotate" from="0 300 350" to="-360 300 350" dur="18s" repeatCount="indefinite"/>
+          <circle cx="300" cy="350" r="170" fill="none" stroke="#ff3355" stroke-width="1" stroke-dasharray="5 8" opacity="0.6"/>
+        </g>
+
+        <!-- Inner dashed ring — fast clockwise -->
+        <g style="transform-origin:300px 350px">
+          <animateTransform attributeName="transform" type="rotate" from="0 300 350" to="360 300 350" dur="8s" repeatCount="indefinite"/>
+          <circle cx="300" cy="350" r="100" fill="none" stroke="#ff3355" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.7"/>
+        </g>
+
+        <!-- HUD crosshair lines -->
+        <line x1="300" y1="60" x2="300" y2="130" stroke="#ff3355" stroke-width="1.5" opacity="0.6"/>
+        <line x1="300" y1="570" x2="300" y2="640" stroke="#ff3355" stroke-width="1.5" opacity="0.6"/>
+        <line x1="40" y1="350" x2="110" y2="350" stroke="#ff3355" stroke-width="1.5" opacity="0.6"/>
+        <line x1="490" y1="350" x2="560" y2="350" stroke="#ff3355" stroke-width="1.5" opacity="0.6"/>
+
+        <!-- 6 orbiting dots at r=220 as rotating group -->
+        <g>
+          <animateTransform attributeName="transform" type="rotate" from="0 300 350" to="360 300 350" dur="14s" repeatCount="indefinite"/>
+          <circle cx="300" cy="130" r="6" fill="#ff3355" filter="url(#glow)" opacity="0.9"/>
+          <circle cx="490.5" cy="240" r="6" fill="#ff3355" filter="url(#glow)" opacity="0.9"/>
+          <circle cx="490.5" cy="460" r="6" fill="#ff3355" filter="url(#glow)" opacity="0.9"/>
+          <circle cx="300" cy="570" r="6" fill="#ff3355" filter="url(#glow)" opacity="0.9"/>
+          <circle cx="109.5" cy="460" r="6" fill="#ff3355" filter="url(#glow)" opacity="0.9"/>
+          <circle cx="109.5" cy="240" r="6" fill="#ff3355" filter="url(#glow)" opacity="0.9"/>
+        </g>
+
+        <!-- Center pulsing dot -->
+        <circle cx="300" cy="350" r="10" fill="#ff3355" filter="url(#glow)">
+          <animate attributeName="r" values="8;14;8" dur="2.4s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.9;0.5;0.9" dur="2.4s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="300" cy="350" r="4" fill="#fff"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-inner">
+    <div class="about-grid reveal">
+      <div class="about-text">
+        <div class="section-label">About ODOOM</div>
+        <h2 class="section-title">Classic Hell, Powered by the Omniverse</h2>
+        <p>ODOOM is a fully modified build of <strong style="color:var(--text-bright)">UZDoom</strong> — a modern C++ Doom source port — deeply integrated with the <strong style="color:var(--text-bright)">OASIS Omniverse</strong> via <a href="https://ogengine.oasisomniverse.one" class="gold-link" target="_blank" rel="noopener">OGEngine</a> and the <a href="https://api.starnet.oasisomniverse.one" target="_blank" rel="noopener">WEB5 STAR API</a>.</p>
+        <p>While the classic gameplay loop of ripping and tearing through demonic hordes remains intact, ODOOM extends it into the physical world. Keycards, weapons, and armour are hidden at real GPS coordinates in parks around the world. Players physically walk to those locations to collect items, which then appear in their shared OASIS inventory and unlock in-game.</p>
+        <p>NFTs are minted automatically for significant kills, creating a permanent on-chain record of your slaughter. Cross-game quests powered by <a href="https://ogengine.oasisomniverse.one" class="gold-link" target="_blank" rel="noopener">OGEngine</a> let you carry your OASIS avatar and progress across every game in the Omniverse. Karma earned in ODOOM flows through the entire ecosystem.</p>
+        <p>AR demon combat — coming soon — will bring the invasion to your actual neighbourhood. Real parks, real enemies, augmented reality.</p>
+        <p>Built on the <a href="https://api.web4.oasisomniverse.one" target="_blank" rel="noopener">WEB4 OASIS API</a> with full <a href="https://api.starnet.oasisomniverse.one" target="_blank" rel="noopener">WEB5 STAR API</a> integration.</p>
+      </div>
+      <div>
+        <div class="hud-card">
+          <div class="hud-card-title">// OASIS HUD — CURRENT SESSION</div>
+          <div class="hud-row">
+            <span class="hud-label">DEMONS SLAIN</span>
+            <span class="hud-value">847</span>
+          </div>
+          <div class="hud-row">
+            <span class="hud-label">DEMON TYPES</span>
+            <span class="hud-value">12</span>
+          </div>
+          <div class="hud-row">
+            <span class="hud-label">IRL KEYCARDS FOUND</span>
+            <span class="hud-value">3</span>
+          </div>
+          <div class="hud-row">
+            <span class="hud-label">IRL WEAPONS FOUND</span>
+            <span class="hud-value">7</span>
+          </div>
+          <div class="hud-row">
+            <span class="hud-label">KARMA EARNED</span>
+            <span class="hud-value" style="color:var(--cyan)">+240</span>
+          </div>
+          <div class="hud-row">
+            <span class="hud-label">SHARED INVENTORY ITEMS</span>
+            <span class="hud-value cyan">14</span>
+          </div>
+          <div class="hud-row">
+            <span class="hud-label">NFTs MINTED</span>
+            <span class="hud-value gold">2</span>
+          </div>
+          <div class="hud-row">
+            <span class="hud-label">ACTIVE QUESTS</span>
+            <span class="hud-value gold">3</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-label">Features</div>
+      <h2 class="section-title">Everything Hell Has to Offer</h2>
+      <p class="section-intro">Classic demon-slaying meets decentralised real-world adventure. Eight features that blur the line between gameplay and reality.</p>
+    </div>
+    <div class="features-grid reveal">
+
+      <div class="feature-card">
+        <span class="feature-icon">🔫</span>
+        <div class="feature-title">Classic Demon Combat</div>
+        <p class="feature-desc">The full UZDoom experience — tight gunplay, classic Doom enemies, modern source-port stability. All the classic maps, weapons, and the raw satisfaction of pixelated carnage.</p>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-icon">📍</span>
+        <div class="feature-title">Real-World Keycards</div>
+        <p class="feature-desc">Red, blue, and yellow keycards are hidden at real GPS coordinates in parks. Walk there physically to collect them. Your GPS hardware unlocks the corresponding in-game door.</p>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-icon">⚔️</span>
+        <div class="feature-title">IRL Weapons &amp; Armour</div>
+        <p class="feature-desc">Shotguns, rocket launchers, chainsaw shards, and armour pieces are geo-cached in the real world. Find them on your walk home and load up before the next session.</p>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-icon">🎒</span>
+        <div class="feature-title">Shared OASIS Inventory</div>
+        <p class="feature-desc">Every item collected flows into your shared OASIS inventory via the <a href="https://api.web4.oasisomniverse.one" target="_blank" rel="noopener">WEB4 OASIS API</a>. Weapons, keycards, and armour persist and transfer across every OASIS game.</p>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-icon">🏆</span>
+        <div class="feature-title">NFT Kill Minting</div>
+        <p class="feature-desc">Legendary kills — boss demons, rare encounters — trigger automatic NFT minting via the STAR API. An immutable on-chain record of your most glorious carnage, tradeable in any Web3 marketplace.</p>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-icon">🌐</span>
+        <div class="feature-title">Cross-Game Quests</div>
+        <p class="feature-desc">Quests powered by <a href="https://ogengine.oasisomniverse.one" target="_blank" rel="noopener">OGEngine</a> span ODOOM, OQuake, and every other OASIS game. Objectives, rewards, and progress follow your avatar wherever you play.</p>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-icon">🧬</span>
+        <div class="feature-title">Avatar SSO</div>
+        <p class="feature-desc">One OASIS avatar across all Omniverse games. Karma, achievements, inventory, and identity are persistent. Log in once, play everywhere — ODOOM, OQuake, Our World, and beyond.</p>
+      </div>
+
+      <div class="feature-card coming-soon">
+        <span class="feature-icon">📡</span>
+        <div class="feature-title">AR Demon Combat</div>
+        <p class="feature-desc">Point your phone at a park and watch the invasion begin. Pinky demons behind the bandstand. Cacodemons above the pond. Real-world locations, real-time augmented slaughter.</p>
+        <span class="feature-badge">Coming Soon</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- REAL WORLD -->
+<section id="realworld">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-label">Real-World Gameplay</div>
+      <h2 class="section-title">The Map is Your City</h2>
+      <p class="section-intro">Step away from the keyboard. The best loot in ODOOM isn't behind a wall — it's behind the park gates down the road.</p>
+    </div>
+
+    <div class="rw-grid reveal">
+      <div class="rw-card red">
+        <div class="rw-num">01</div>
+        <div class="rw-title">Find the Keycard</div>
+        <p class="rw-desc">Red, blue, and yellow keycards are embedded at GPS coordinates in public parks worldwide. Open the ODOOM companion app, navigate to the marker, and physically collect the keycard to unlock the corresponding in-game door.</p>
+      </div>
+      <div class="rw-card orange">
+        <div class="rw-num">02</div>
+        <div class="rw-title">Claim Weapons &amp; Armour</div>
+        <p class="rw-desc">Shotguns, chainsaws, rocket launchers, and armour plating are geo-cached throughout parks and green spaces. Each item discovered syncs instantly to your shared OASIS inventory, ready to equip across all your sessions.</p>
+      </div>
+      <div class="rw-card cyan">
+        <div class="rw-num">03</div>
+        <div class="rw-title">Fight IRL — Coming Soon</div>
+        <p class="rw-desc">AR demon combat will bring Doom's infernal horde into augmented reality. Walk your local park and engage demons in the real world using your phone. GPS-anchored spawn points, weather-adaptive enemy variants, and real-time multiplayer clashes.</p>
+      </div>
+    </div>
+
+    <div class="how-strip reveal">
+      <div class="how-step">
+        <div class="how-step-num">1</div>
+        <div class="how-step-label">Open ODOOM</div>
+        <div class="how-step-desc">Launch the game or companion app on your device</div>
+      </div>
+      <div class="how-step">
+        <div class="how-step-num">2</div>
+        <div class="how-step-label">Check the Map</div>
+        <div class="how-step-desc">GPS markers show nearby keycards and cached items</div>
+      </div>
+      <div class="how-step">
+        <div class="how-step-num">3</div>
+        <div class="how-step-label">Go Outside</div>
+        <div class="how-step-desc">Walk to the real-world location in your local park</div>
+      </div>
+      <div class="how-step">
+        <div class="how-step-num">4</div>
+        <div class="how-step-label">Collect the Loot</div>
+        <div class="how-step-desc">Tap to claim — item syncs to your OASIS inventory</div>
+      </div>
+      <div class="how-step">
+        <div class="how-step-num">5</div>
+        <div class="how-step-label">Rip and Tear</div>
+        <div class="how-step-desc">Return home and load into ODOOM with your real-world haul</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OGENGINE BAND -->
+<div id="ogengine-band">
+  <div class="ogengine-inner reveal">
+    <div class="oge-logo-block">
+      <div class="oge-wordmark">OGEngine</div>
+      <div class="oge-sub-label">// OMNIVERSE GAME ENGINE</div>
+    </div>
+    <div>
+      <p class="oge-desc">ODOOM is powered by <strong style="color:var(--gold)">OGEngine</strong> — the cross-game backbone of the OASIS Omniverse. Every quest, inventory item, avatar stat, and NFT flows through the <a href="https://api.web4.oasisomniverse.one" target="_blank" rel="noopener">WEB4 OASIS API</a> and the <a href="https://api.starnet.oasisomniverse.one" target="_blank" rel="noopener">WEB5 STAR API</a>. One engine. Infinite games. Your progress follows you everywhere.</p>
+      <div class="oge-pills">
+        <span class="oge-pill">WEB4 OASIS API</span>
+        <span class="oge-pill">WEB5 STAR API</span>
+        <span class="oge-pill">STARAPIClient</span>
+        <span class="oge-pill">Cross-Game Quests</span>
+        <span class="oge-pill">Shared Inventory</span>
+        <span class="oge-pill">NFT Minting</span>
+      </div>
+      <a class="btn-gold" href="https://ogengine.oasisomniverse.one" target="_blank" rel="noopener">Explore OGEngine →</a>
+    </div>
+  </div>
+</div>
+
+<!-- ROADMAP -->
+<section id="roadmap">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-label">Roadmap</div>
+      <h2 class="section-title">The Invasion Progresses</h2>
+      <p class="section-intro">Six phases bringing the full ODOOM vision to life — from core engine integration to city-wide AR battles.</p>
+    </div>
+
+    <div class="roadmap-grid reveal">
+
+      <div class="rm-tile">
+        <div class="rm-phase">PHASE 1</div>
+        <div class="rm-title">ODOOM Core + OGEngine</div>
+        <p class="rm-desc">UZDoom fork with full OASIS integration, OGEngine connection, WEB5 STAR API, shared inventory, avatar SSO, and karma system.</p>
+        <span class="rm-badge in-progress">In Progress</span>
+      </div>
+
+      <div class="rm-tile">
+        <div class="rm-phase">PHASE 2</div>
+        <div class="rm-title">Real-World Item Discovery</div>
+        <p class="rm-desc">GPS keycard and weapon geo-caching in parks, companion app integration, real-to-game item sync via the WEB4 OASIS API.</p>
+        <span class="rm-badge in-progress">In Progress</span>
+      </div>
+
+      <div class="rm-tile">
+        <div class="rm-phase">PHASE 3</div>
+        <div class="rm-title">NFT Kill Registry</div>
+        <p class="rm-desc">On-chain recording of legendary kills and boss takedowns. Automatic NFT minting, on-chain provenance, cross-marketplace trading.</p>
+        <span class="rm-badge coming-soon">Coming Soon</span>
+      </div>
+
+      <div class="rm-tile">
+        <div class="rm-phase">PHASE 4</div>
+        <div class="rm-title">AR Demon Combat</div>
+        <p class="rm-desc">Augmented reality demon encounters in real parks. GPS-anchored spawn points, weather-adaptive enemies, real-time AR multiplayer slaughter.</p>
+        <span class="rm-badge coming-soon">Coming Soon</span>
+      </div>
+
+      <div class="rm-tile">
+        <div class="rm-phase">PHASE 5</div>
+        <div class="rm-title">Clan &amp; Multiplayer</div>
+        <p class="rm-desc">Form OASIS clans, coordinate real-world item hunts as teams, share inventory between clan members, and wage clan-vs-clan AR wars.</p>
+        <span class="rm-badge coming-soon">Coming Soon</span>
+      </div>
+
+      <div class="rm-tile future">
+        <div class="rm-phase">BEYOND</div>
+        <div class="rm-title">More Hell to Come</div>
+        <p class="rm-desc">Procedurally generated real-world events. City-scale invasions. Cross-Omniverse tournaments. The gates of Hell have no final level.</p>
+        <span class="rm-badge future-badge">Future</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="cta-inner reveal">
+    <div class="section-label">Get Started</div>
+    <h2 class="section-title">Ready to Rip and Tear?</h2>
+    <p class="cta-sub">Download ODOOM, explore the OASIS Omniverse, and find your first keycard. The parks are already hiding your arsenal.</p>
+    <div class="cta-buttons">
+      <a class="btn-primary" href="https://github.com/NextGenSoftwareUK/OASIS/releases/tag/STAR-API-CLIENT-v1.0.0" target="_blank" rel="noopener">Download Now</a>
+      <a class="btn-cyan" href="https://oasisomniverse.one" target="_blank" rel="noopener">OASIS Omniverse</a>
+      <a class="btn-gold-filled" href="https://ogengine.oasisomniverse.one" target="_blank" rel="noopener">OGEngine</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+
+    <div class="footer-brand">
+      <div class="footer-logo-text">ODOOM</div>
+      <p class="footer-desc">A modified UZDoom integrated with the OASIS Omniverse. Real-world loot, demon slaying, and AR combat — powered by OGEngine and the WEB5 STAR API.</p>
+      <div class="footer-socials">
+        <a class="social-link" href="https://github.com/NextGenSoftwareUK/OASIS" target="_blank" rel="noopener" title="GitHub">GH</a>
+        <a class="social-link" href="https://twitter.com/OASISAvatars" target="_blank" rel="noopener" title="X / Twitter">𝕏</a>
+        <a class="social-link" href="#" target="_blank" rel="noopener" title="Discord">DC</a>
+        <a class="social-link" href="#" target="_blank" rel="noopener" title="Telegram">TG</a>
+      </div>
+    </div>
+
+    <div>
+      <div class="footer-col-title">Ecosystem</div>
+      <ul class="footer-links">
+        <li><a href="https://oasisomniverse.one" target="_blank" rel="noopener">OASIS Omniverse</a></li>
+        <li><a href="https://ogengine.oasisomniverse.one" target="_blank" rel="noopener">OGEngine</a></li>
+        <li><a href="https://oquake.oasisomniverse.one" target="_blank" rel="noopener">OQuake</a></li>
+        <li><a href="https://ourworld.oasisomniverse.one" target="_blank" rel="noopener">Our World</a></li>
+        <li><a href="https://holonet.oasisomniverse.one" target="_blank" rel="noopener">HoloNET</a></li>
+        <li><a href="https://oportal.oasisomniverse.one" target="_blank" rel="noopener">OPORTAL</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="footer-col-title">Resources</div>
+      <ul class="footer-links">
+        <li><a href="https://github.com/NextGenSoftwareUK/OASIS/releases/tag/STAR-API-CLIENT-v1.0.0" target="_blank" rel="noopener">Download ODOOM</a></li>
+        <li><a href="https://api.web4.oasisomniverse.one" target="_blank" rel="noopener">WEB4 OASIS API</a></li>
+        <li><a href="https://api.starnet.oasisomniverse.one" target="_blank" rel="noopener">WEB5 STAR API</a></li>
+        <li><a href="https://api.starnet.oasisomniverse.one" target="_blank" rel="noopener">STARNet</a></li>
+        <li><a href="https://github.com/NextGenSoftwareUK/OASIS" target="_blank" rel="noopener">GitHub Repository</a></li>
+        <li><a href="https://nftfounders.oasisomniverse.one" target="_blank" rel="noopener">Founders NFT</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="footer-col-title">Community</div>
+      <ul class="footer-links">
+        <li><a href="#" target="_blank" rel="noopener">Discord</a></li>
+        <li><a href="https://twitter.com/OASISAvatars" target="_blank" rel="noopener">X / Twitter</a></li>
+        <li><a href="#" target="_blank" rel="noopener">Telegram</a></li>
+        <li><a href="https://www.youtube.com/channel/UC0_O4RwdY3lq1m3-K-njUxA" target="_blank" rel="noopener">YouTube — Our World Legacy</a></li>
+        <li><a href="https://nftfounders.oasisomniverse.one" target="_blank" rel="noopener">Founders NFT</a></li>
+      </ul>
+    </div>
+
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 NextGenSoftware UK. ODOOM is part of the <a href="https://oasisomniverse.one">OASIS Omniverse</a>.</span>
+    <span>Built on <a href="https://github.com/NextGenSoftwareUK/OASIS">OASIS</a> &middot; <a href="https://ogengine.oasisomniverse.one">OGEngine</a> &middot; WEB5 STAR API</span>
+  </div>
+</footer>
+
+<script>
+  // ── STAR CANVAS ──────────────────────────────────────────────
+  (function () {
+    const canvas = document.getElementById('star-canvas');
+    const ctx = canvas.getContext('2d');
+    let stars = [];
+    const COUNT = 220;
+
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    function initStars() {
+      stars = [];
+      for (let i = 0; i < COUNT; i++) {
+        stars.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          r: Math.random() * 1.4 + 0.2,
+          alpha: Math.random() * 0.7 + 0.15,
+          speed: Math.random() * 0.015 + 0.004,
+          phase: Math.random() * Math.PI * 2,
+        });
+      }
+    }
+
+    let t = 0;
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      t += 0.012;
+      stars.forEach(s => {
+        const a = s.alpha * (0.6 + 0.4 * Math.sin(t * s.speed * 40 + s.phase));
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(168,191,216,${a})`;
+        ctx.fill();
+      });
+      requestAnimationFrame(draw);
+    }
+
+    resize();
+    initStars();
+    draw();
+    window.addEventListener('resize', () => { resize(); initStars(); });
+  })();
+
+  // ── SCROLL REVEAL ────────────────────────────────────────────
+  (function () {
+    const reveals = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+    reveals.forEach(el => io.observe(el));
+  })();
+</script>
+</body>
+</html>
