@@ -1105,6 +1105,17 @@
   .ai-tile-title{font-family:'Orbitron',sans-serif;font-size:.82rem;font-weight:700;letter-spacing:.08em;color:#c4a0ff;text-transform:uppercase;margin-bottom:.6rem}
   .ai-tile-desc{font-size:.92rem;color:#ffffff;line-height:1.6}
   .ai-tagline{text-align:center;font-family:'Share Tech Mono',monospace;font-size:.82rem;letter-spacing:.18em;color:rgba(200,160,255,.85);padding-top:1.5rem;border-top:1px solid rgba(120,60,255,.15)}
+  /* ── SINGULARITY ── */
+  #singularity, #singularity-q { padding: 6rem 0; }
+  .singularity-intro { max-width: 820px; margin: 0 auto 3rem; text-align: center; color: #a8bfd8; font-size: 1.05rem; line-height: 1.75; }
+  .singularity-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px,1fr)); gap: 1.4rem; margin-bottom: 3rem; }
+  .singularity-card { background: rgba(255,255,255,.025); border: 1px solid rgba(255,255,255,.08); border-radius: 10px; padding: 1.6rem 1.8rem; }
+  .singularity-card-icon { font-size: 1.8rem; margin-bottom: .8rem; }
+  .singularity-card-title { font-family: 'Orbitron', sans-serif; font-size: .82rem; font-weight: 700; letter-spacing: .06em; color: #e8f4ff; margin-bottom: .6rem; }
+  .singularity-card-desc { font-size: .88rem; color: #a8bfd8; line-height: 1.6; }
+  .singularity-quote { background: rgba(0,229,255,.04); border: 1px solid rgba(0,229,255,.15); border-radius: 10px; padding: 2.5rem; text-align: center; max-width: 820px; margin: 0 auto; }
+  .singularity-quote-line { font-family: 'Orbitron', sans-serif; font-size: 1.15rem; font-weight: 700; color: #e8f4ff; margin-bottom: .75rem; letter-spacing: .03em; }
+  .singularity-quote-sub { font-family: 'Share Tech Mono', monospace; font-size: .78rem; letter-spacing: .18em; color: rgba(0,229,255,.7); text-transform: uppercase; }
   /* ── VIDEO ── */
   .vid-section{padding:5rem 0}
   .vid-section .section-inner{max-width:1100px;margin:0 auto;padding:0 2rem}
@@ -1338,7 +1349,7 @@
       <div class="feature-card">
         <span class="feature-icon">✏️</span>
         <div class="feature-title">ODOOM Editor</div>
-        <p class="feature-desc">A fork of the popular Ultimate Doom Editor with a STAR toolbar and menu. Drag and drop ODOOM &amp; OQUAKE assets — monsters, powerups, keycards, weapons, armour — directly into any DOOM map or WAD file. Design levels and publish to the OASIS ecosystem.</p>
+        <p class="feature-desc">A fork of the popular Ultimate Doom Editor with a STAR toolbar and menu. Build and edit maps with full placement of Doom and Quake assets — monsters, keys, health, armour, powerups, weapons and items. Deeper <a href="https://ogengine.oasisomniverse.one" target="_blank" rel="noopener">OGEngine</a> and <a href="https://api.starnet.oasisomniverse.one" target="_blank" rel="noopener">STAR API</a> integration is coming soon, enabling quest and mission creation directly within the editor.</p>
       </div>
 
       <div class="feature-card">
@@ -1422,11 +1433,19 @@
     </div>
     <div class="vid-grid reveal">
       <div class="vid-card">
+        <div class="vid-frame"><iframe src="https://www.youtube-nocookie.com/embed/3O4ykhDzsiE" title="OGEngine Demo 1 — SSO & shared inventory" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+        <div class="vid-info">
+          <div class="vid-kicker">ODOOM · DEMO 1</div>
+          <div class="vid-title">ODOOM + OQUAKE SSO & INVENTORY</div>
+          <div class="vid-text">Shows shared inventory and Avatar SSO flowing across ODOOM and OQuake through <a href="https://ogengine.oasisomniverse.one" target="_blank" rel="noopener">OGEngine</a> and the STAR API.</div>
+        </div>
+      </div>
+      <div class="vid-card">
         <div class="vid-frame"><iframe src="https://www.youtube-nocookie.com/embed/ZH5u6OVPVYg" title="ODOOM OGEngine Tech Demo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
         <div class="vid-info">
-          <div class="vid-kicker">ODOOM · TECH DEMO</div>
-          <div class="vid-title">OGENGINE INTEGRATION DEMO</div>
-          <div class="vid-text">Live demonstration of ODOOM running on <a href="https://ogengine.oasisomniverse.one" target="_blank" rel="noopener">OGEngine</a> — OASIS Avatar SSO, shared inventory, cross-game quests and GeoHotSpot triggers in action.</div>
+          <div class="vid-kicker">ODOOM · DEMO 2</div>
+          <div class="vid-title">WEAPONS + CROSS-GAME QUESTS</div>
+          <div class="vid-text">Demonstrates shared weapons, inventory, SSO and cross-game quests between ODOOM and OQuake via <a href="https://ogengine.oasisomniverse.one" target="_blank" rel="noopener">OGEngine</a>.</div>
         </div>
       </div>
     </div>
@@ -1561,8 +1580,8 @@
       <p>The UAC scientists have really done it this time. A hole torn through the space-time continuum has ripped rifts across the multiverse — Quake monsters bleeding into Doom's corridors, Doom demons stalking Quake's arenas, and strange keys from parallel worlds locking doors in both. Find a keycard in ODOOM to unlock a portal in OQuake. Track down powerups in <a href="https://ourworld.oasisomniverse.one" target="_blank" rel="noopener">Our World</a>. The story never ends — as new games join the OASIS Omniverse, the quest expands to consume them too.</p>
     </div>
     <div class="shareware-note reveal">
-      <p>Just like the original <strong>DOOM Episode 1</strong> launched as shareware — free to play and free to share — <strong>Chapter I of the ODOOM quest line will be completely free</strong>. When it drops in Q3/Q4 2026, download it, play it, pass it on. The story of the Doom Slayer continues from exactly where Carmack and Romero left it.</p>
-      <a class="shareware-dl" href="https://github.com/NextGenSoftwareUK/ODOOM/releases/tag/ODOOM_v.1.0.0_ALPHA" target="_blank" rel="noopener">▶ Wishlist — Coming Q3/Q4 2026</a>
+      <p><strong>ODOOM is available to download and play right now</strong> — including cross-game quests, shared inventory and Avatar SSO with OQuake. Just like the original <strong>DOOM Episode 1</strong> launched as shareware — free to play and free to share — <strong>Chapter I of the epic cross-game quest line will be completely free</strong> when it drops in Q3/Q4 2026. To create your own quests and missions today, use the <a href="https://api.starnet.oasisomniverse.one" target="_blank" rel="noopener">STAR API</a> or <a href="https://github.com/NextGenSoftwareUK/OASIS/releases/tag/STAR-ODK-Runtime-v3.5.0" target="_blank" rel="noopener">STAR CLI/ODK</a> — with <a href="https://oportal.oasisomniverse.one" target="_blank" rel="noopener">OPORTAL</a>, <a href="https://starnet.oasisomniverse.one" target="_blank" rel="noopener">STARNET</a> and the OIDE visual quest builder all coming soon.</p>
+      <a class="shareware-dl" href="https://github.com/NextGenSoftwareUK/ODOOM/releases/tag/ODOOM_v.1.0.0_ALPHA" target="_blank" rel="noopener">▶ Download ODOOM Alpha — Free</a>
     </div>
     <div class="psd-teaser reveal">
       <div class="psd-label">⬡ TRANSMISSION INTERCEPTED · ORIGIN UNKNOWN</div>
@@ -1595,6 +1614,43 @@
       </div>
     </div>
     <div class="quest-tagline reveal">THE STORY OF DOOM NEVER ENDS · IT JUST KEEPS EXPANDING</div>
+  </div>
+</section>
+
+<!-- SINGULARITY -->
+<section id="singularity" style="background:linear-gradient(180deg,rgba(0,0,0,0),rgba(255,51,85,.05),rgba(240,165,0,.04),rgba(0,229,255,.04),rgba(0,0,0,0))">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-label">THE OASIS OMNIVERSE ENDGAME</div>
+      <h2 class="section-title">The Singularity</h2>
+    </div>
+    <p class="singularity-intro reveal">You're fighting through a UAC corridor on Mars. Up ahead — a portal. You step through. No loading screen. No menu. You're standing in a Quake arena, demons behind you and Shamblers ahead. The Doom Slayer doesn't stop. The worlds have merged.</p>
+    <div class="singularity-cards reveal">
+      <div class="singularity-card">
+        <div class="singularity-card-icon">🌀</div>
+        <div class="singularity-card-title">CROSS-GAME TELEPORTATION</div>
+        <p class="singularity-card-desc">For the first time in the history of Doom and Quake, portals will connect not just maps but entire games — with instant loading and no loading screens. Step through a portal in ODOOM and emerge in OQuake. Your weapons, armour and keycards come with you.</p>
+      </div>
+      <div class="singularity-card">
+        <div class="singularity-card-icon">🏗️</div>
+        <div class="singularity-card-title">BUILD YOUR OWN PORTALS</div>
+        <p class="singularity-card-desc">The ODOOM Editor already lets you build and edit maps with full Doom and Quake asset placement. Once the OASIS OS/HUB is complete, you'll be able to place and configure cross-game portals directly in the editor — connecting your maps to any world in the Omniverse.</p>
+      </div>
+      <div class="singularity-card">
+        <div class="singularity-card-icon">∞</div>
+        <div class="singularity-card-title">THE WALLS COME DOWN</div>
+        <p class="singularity-card-desc">As every new game joins the OASIS Omniverse, the portal network expands. The boundary between ODOOM and OQuake is just the beginning. Every connected world becomes part of one infinite, seamless universe. The Singularity.</p>
+      </div>
+      <div class="singularity-card">
+        <div class="singularity-card-icon">🧬</div>
+        <div class="singularity-card-title">ONE AVATAR. EVERY WORLD.</div>
+        <p class="singularity-card-desc">Your OASIS Avatar, inventory, karma and achievements follow you through every portal you step through. Your weapons, your keycards, your kill record — all persistent. No restarting. No re-logging. The Doom Slayer is the same Doom Slayer in every world.</p>
+      </div>
+    </div>
+    <div class="singularity-quote reveal">
+      <div class="singularity-quote-line">"You could go anywhere. Do anything."</div>
+      <div class="singularity-quote-sub">— The vision of Ready Player One. Built in ODOOM.</div>
+    </div>
   </div>
 </section>
 
@@ -1791,7 +1847,7 @@
       <div class="rm-tile future">
         <div class="rm-kicker-dim">ALWAYS EVOLVING</div>
         <div class="rm-title" style="color:#a8bfd8">More Hell to Come</div>
-        <p class="rm-desc">Cross-game clans, city-scale invasions, real-world tournament integration, OLAND digital land, multiplayer AR battles, and much more on the horizon. The gates of Hell have no final level.</p>
+        <p class="rm-desc">Cross-game clans, city-scale invasions, real-world tournament integration, OLAND digital land, multiplayer AR battles, OIDE visual quest builder, and much more on the horizon. The gates of Hell have no final level.</p>
       </div>
 
     </div>
