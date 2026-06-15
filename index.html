@@ -36,6 +36,8 @@
       overflow-x: hidden;
     }
 
+    a { color: inherit; text-decoration: none; }
+
     /* CRT scanline overlay */
     body::before {
       content: '';
@@ -276,6 +278,7 @@
       color: var(--red);
       text-transform: uppercase;
       margin-bottom: 0.75rem;
+      text-align: center;
     }
 
     .section-title {
@@ -285,13 +288,15 @@
       color: var(--red);
       line-height: 1.2;
       margin-bottom: 1.25rem;
+      text-align: center;
     }
 
     .section-intro {
       font-size: 1.05rem;
       color: var(--text);
       max-width: 640px;
-      margin-bottom: 3rem;
+      margin: 0 auto 3rem;
+      text-align: center;
     }
 
     /* ABOUT */
@@ -522,7 +527,7 @@
       left: 10%;
       right: 10%;
       height: 1px;
-      background: linear-gradient(90deg, transparent, var(--border), var(--cyan), var(--border), transparent);
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
     }
 
     .how-step {
@@ -738,11 +743,33 @@
       color: var(--cyan);
     }
 
+    .rm-badge.done {
+      background: rgba(0, 204, 136, 0.12);
+      border: 1px solid rgba(0, 204, 136, 0.4);
+      color: #00cc88;
+    }
+
+    .rm-tile.done {
+      border-color: rgba(0, 204, 136, 0.35);
+      box-shadow: inset 0 0 30px rgba(0, 204, 136, 0.05);
+    }
+
+    .rm-tile.done:hover {
+      border-color: rgba(0, 204, 136, 0.6);
+      box-shadow: 0 6px 24px rgba(0, 204, 136, 0.12);
+    }
+
+    .rm-tile.active { border-color: rgba(255, 51, 85, 0.3); }
+
     .rm-badge.future-badge {
       background: rgba(168, 191, 216, 0.06);
       border: 1px solid rgba(168, 191, 216, 0.2);
       color: rgba(168, 191, 216, 0.5);
     }
+
+    .rm-kicker-gold { font-family:'Share Tech Mono',monospace;font-size:.68rem;letter-spacing:.15em;color:var(--gold);margin-bottom:.4rem }
+    .rm-kicker-cyan { font-family:'Share Tech Mono',monospace;font-size:.68rem;letter-spacing:.15em;color:var(--cyan);margin-bottom:.4rem }
+    .rm-kicker-dim  { font-family:'Share Tech Mono',monospace;font-size:.68rem;letter-spacing:.15em;color:rgba(168,191,216,.4);margin-bottom:.4rem }
 
     /* CTA */
     #cta {
@@ -921,7 +948,7 @@
       transition: color 0.2s;
     }
 
-    .footer-bottom p{color:#a8bfd8;font-size:.82rem}.footer-bottom a{color:#a8bfd8;text-decoration:none}
+    .footer-bottom p{color:#a8bfd8;font-size:.82rem}.footer-bottom a{color:#a8bfd8 !important;text-decoration:none !important;border-bottom:none !important}
     footer a:hover { color: var(--red); filter:drop-shadow(0 0 8px rgba(255,51,85,1)) drop-shadow(0 0 20px rgba(255,51,85,.8)) drop-shadow(0 0 40px rgba(255,51,85,.4)) }
 
     .footer-bottom {
@@ -989,6 +1016,95 @@
       .how-strip { grid-template-columns: 1fr; }
     }
   a:hover{filter:drop-shadow(0 0 8px rgba(255,51,85,1)) drop-shadow(0 0 20px rgba(255,51,85,.8)) drop-shadow(0 0 40px rgba(255,51,85,.4))}
+  /* inline prose links */
+  p a, .rw-desc a, .feature-desc a, .rm-desc a, .how-step-desc a, .become-card-body a, .tribute-intro-doom a, .become-intro-doom a, .how-text a{color:var(--cyan);text-decoration:none;border-bottom:1px solid rgba(0,229,255,.3);transition:color .2s,border-color .2s}
+  p a:hover, .rw-desc a:hover, .feature-desc a:hover, .rm-desc a:hover, .how-step-desc a:hover, .become-card-body a:hover, .tribute-intro-doom a:hover, .become-intro-doom a:hover, .how-text a:hover{color:#fff;border-bottom-color:rgba(0,229,255,.8);filter:none}
+  /* ── SHAREWARE BADGE ── */
+  .shareware-badge{display:inline-flex;align-items:center;gap:.5rem;font-family:'Share Tech Mono',monospace;font-size:.72rem;letter-spacing:.18em;color:#00cc88;border:1px solid rgba(0,204,136,.4);background:rgba(0,204,136,.08);padding:.3rem .9rem;border-radius:3px;margin-bottom:1.2rem}
+  .shareware-badge::before{content:'▶';font-size:.6rem}
+  /* ── BECOME ── */
+  #become{padding:6rem 0;background:linear-gradient(180deg,rgba(0,0,0,0),rgba(0,204,136,.04),rgba(240,165,0,.03),rgba(0,0,0,0))}
+  .become-intro-doom{max-width:820px;margin:0 auto 3.5rem;text-align:center;color:#a8bfd8;font-size:1.05rem;line-height:1.8}
+  .become-intro-doom strong{color:#00cc88}
+  .become-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-bottom:2.5rem}
+  @media(max-width:760px){.become-grid{grid-template-columns:1fr}}
+  .become-card{background:rgba(255,255,255,.025);border-radius:10px;padding:2rem;position:relative;overflow:hidden}
+  .become-card.green{border:1px solid rgba(0,204,136,.25)}.become-card.green::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#00cc88,transparent)}
+  .become-card.gold{border:1px solid rgba(240,165,0,.25)}.become-card.gold::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+  .become-card.full{border:1px solid rgba(0,229,255,.2);grid-column:1/-1}.become-card.full::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--cyan),transparent)}
+  .become-card-icon{font-size:2rem;margin-bottom:1rem;display:block}
+  .become-card-title{font-family:'Orbitron',sans-serif;font-size:.9rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.9rem}
+  .become-card.green .become-card-title{color:#00cc88}
+  .become-card.gold .become-card-title{color:var(--gold)}
+  .become-card.full .become-card-title{color:var(--cyan)}
+  .become-card-body{color:#ffffff;font-size:.93rem;line-height:1.7}
+  .karma-actions{display:flex;flex-wrap:wrap;gap:.5rem;margin:1rem 0}
+  .karma-pill{font-family:'Share Tech Mono',monospace;font-size:.7rem;letter-spacing:.12em;padding:.28rem .75rem;border-radius:3px;background:rgba(0,204,136,.12);border:1px solid rgba(0,204,136,.3);color:#00cc88}
+  .stat-boosts{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:.7rem;margin-top:1rem}
+  .stat-boost{background:rgba(240,165,0,.08);border:1px solid rgba(240,165,0,.2);border-radius:6px;padding:.6rem .9rem;text-align:center}
+  .stat-boost-label{font-family:'Share Tech Mono',monospace;font-size:.65rem;letter-spacing:.15em;color:var(--gold);display:block;margin-bottom:.2rem}
+  .stat-boost-val{font-family:'Orbitron',sans-serif;font-size:.78rem;font-weight:700;color:#ffffff}
+  .hotkeys{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:.75rem;margin-top:1rem}
+  .hotkey{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:6px;padding:.7rem;text-align:center}
+  .hotkey-key{font-family:'Orbitron',sans-serif;font-size:1.1rem;font-weight:900;color:#ffffff;display:block;margin-bottom:.3rem}
+  .hotkey-label{font-family:'Share Tech Mono',monospace;font-size:.62rem;letter-spacing:.12em;color:#a8bfd8}
+  .config-grid-doom{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:.6rem;margin-top:1rem}
+  .config-row{font-family:'Share Tech Mono',monospace;font-size:.7rem;background:rgba(0,0,0,.3);border-radius:4px;padding:.45rem .7rem;display:flex;justify-content:space-between;gap:.5rem;white-space:nowrap}
+  .config-key{color:var(--cyan)}
+  .config-val{color:#00cc88}
+  /* ── TRIBUTE ── */
+  #tribute-doom{padding:6rem 0;background:linear-gradient(180deg,rgba(0,0,0,0),rgba(240,165,0,.04),rgba(0,0,0,0))}
+  .tribute-intro-doom{max-width:820px;margin:0 auto 3.5rem;text-align:center;color:#a8bfd8;font-size:1.05rem;line-height:1.8}
+  .tribute-intro-doom strong{color:var(--gold)}
+  .meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-bottom:3rem}
+  @media(max-width:760px){.meta-grid{grid-template-columns:1fr}}
+  .meta-card{background:rgba(255,255,255,.025);border:1px solid rgba(240,165,0,.2);border-radius:10px;padding:2rem;position:relative;overflow:hidden}
+  .meta-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+  .meta-card-icon{font-size:2rem;margin-bottom:1rem;display:block}
+  .meta-card-title{font-family:'Orbitron',sans-serif;font-size:.9rem;font-weight:700;letter-spacing:.08em;color:var(--gold);text-transform:uppercase;margin-bottom:.8rem}
+  .meta-card-body{color:#ffffff;font-size:.95rem;line-height:1.7}
+  .meta-card-body p{margin-bottom:.8rem}
+  .meta-card-body p:last-child{margin-bottom:0}
+  .tribute-quote{max-width:760px;margin:0 auto;text-align:center;padding:2.5rem;border:1px solid rgba(240,165,0,.2);border-radius:10px;background:rgba(240,165,0,.04)}
+  .tribute-quote p{color:#ffffff;font-size:1.05rem;line-height:1.8;font-style:italic}
+  .tribute-quote cite{display:block;margin-top:1.2rem;font-family:'Share Tech Mono',monospace;font-size:.75rem;letter-spacing:.2em;color:var(--gold);font-style:normal}
+  /* ── EPIC QUEST ── */
+  #epic-quest-doom{padding:6rem 0;background:linear-gradient(180deg,rgba(0,0,0,0),rgba(255,51,85,.04),rgba(255,170,0,.03),rgba(0,229,255,.03),rgba(0,0,0,0))}
+  .quest-intro-doom{max-width:820px;margin:0 auto 3.5rem;text-align:center;color:#a8bfd8;font-size:1.05rem;line-height:1.75}
+  .rift-banner{font-family:'Share Tech Mono',monospace;font-size:.78rem;letter-spacing:.22em;color:rgba(255,51,85,.7);text-align:center;margin-bottom:1.2rem;text-transform:uppercase}
+  .quest-chapters{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1.2rem;margin-bottom:3rem}
+  .psd-teaser{max-width:820px;margin:0 auto 3.5rem;background:rgba(0,229,255,.03);border:1px solid rgba(0,229,255,.12);border-left:3px solid rgba(0,229,255,.5);border-radius:8px;padding:1.6rem 2rem;text-align:left}
+  .psd-teaser .psd-label{font-family:'Share Tech Mono',monospace;font-size:.72rem;letter-spacing:.28em;color:rgba(0,229,255,.65);margin-bottom:.7rem;text-transform:uppercase}
+  .psd-teaser p{color:#a8bfd8;font-size:.92rem;line-height:1.7;margin:0}
+  .psd-teaser strong{color:#c8dff0}
+  .chapter-tile{background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:1.4rem 1.6rem;position:relative;overflow:hidden}
+  .chapter-tile::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+  .chapter-tile.ch-1::before,.chapter-tile.ch-2::before{background:linear-gradient(90deg,transparent,#ff3333,#ffaa00,#00e5ff,transparent)}
+  .chapter-tile.ch-more::before{background:linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent)}
+  .chapter-num{font-family:'Share Tech Mono',monospace;font-size:.7rem;letter-spacing:.2em;margin-bottom:.5rem;color:rgba(255,255,255,.45)}
+  .ch-more .chapter-num{color:rgba(255,255,255,.25)}
+  .chapter-flow{font-family:'Share Tech Mono',monospace;font-size:.68rem;letter-spacing:.1em;margin-bottom:.75rem;line-height:1.6}
+  .chapter-title{font-family:'Orbitron',sans-serif;font-size:.82rem;font-weight:700;letter-spacing:.06em;color:#e8f4ff;margin-bottom:.6rem}
+  .chapter-desc{font-size:.85rem;color:#ffffff;line-height:1.55}
+  .quest-tagline{text-align:center;font-family:'Share Tech Mono',monospace;font-size:.82rem;letter-spacing:.18em;color:rgba(255,255,255,.7);padding-top:1.5rem;border-top:1px solid rgba(255,255,255,.05)}
+  .shareware-note{text-align:center;margin-bottom:3rem}
+  .shareware-note p{color:#a8bfd8;font-size:1rem;line-height:1.75;max-width:720px;margin:0 auto 1.2rem}
+  .shareware-note strong{color:#00cc88}
+  .shareware-dl{display:inline-flex;align-items:center;gap:.6rem;background:#00cc88;color:#000;font-family:'Orbitron',sans-serif;font-size:.78rem;font-weight:700;letter-spacing:.1em;padding:.7rem 1.6rem;border-radius:4px;text-decoration:none}
+  .shareware-dl:hover{filter:brightness(1.1) drop-shadow(0 0 12px rgba(0,204,136,.6))}
+  /* ── AI COMBAT ── */
+  #ai-doom{padding:6rem 0;background:linear-gradient(180deg,rgba(0,0,0,0),rgba(120,60,255,.05),rgba(0,229,255,.03),rgba(0,0,0,0))}
+  .ai-intro-doom{max-width:820px;margin:0 auto 3.5rem;text-align:center;color:#a8bfd8;font-size:1.05rem;line-height:1.75}
+  .ai-agents{display:flex;flex-wrap:wrap;justify-content:center;gap:.7rem;margin:2rem 0 3rem}
+  .ai-agent-pill{font-family:'Share Tech Mono',monospace;font-size:.72rem;letter-spacing:.15em;padding:.3rem .85rem;border-radius:3px;border:1px solid rgba(180,120,255,.35);background:rgba(120,60,255,.1);color:#c4a0ff}
+  .ai-modes{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.4rem;margin-bottom:2.5rem}
+  .ai-tile{background:rgba(255,255,255,.025);border:1px solid rgba(120,60,255,.2);border-radius:10px;padding:1.6rem;position:relative;overflow:hidden;transition:border-color .25s,box-shadow .25s,transform .25s;will-change:transform}
+  .ai-tile:hover{border-color:rgba(180,120,255,.5);box-shadow:0 8px 32px rgba(120,60,255,.18);transform:translateY(-4px)}
+  .ai-tile::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(180,120,255,.6),transparent)}
+  .ai-tile-icon{font-size:1.8rem;margin-bottom:1rem;display:block}
+  .ai-tile-title{font-family:'Orbitron',sans-serif;font-size:.82rem;font-weight:700;letter-spacing:.08em;color:#c4a0ff;text-transform:uppercase;margin-bottom:.6rem}
+  .ai-tile-desc{font-size:.92rem;color:#ffffff;line-height:1.6}
+  .ai-tagline{text-align:center;font-family:'Share Tech Mono',monospace;font-size:.82rem;letter-spacing:.18em;color:rgba(200,160,255,.85);padding-top:1.5rem;border-top:1px solid rgba(120,60,255,.15)}
   /* ── VIDEO ── */
   .vid-section{padding:5rem 0}
   .vid-section .section-inner{max-width:1100px;margin:0 auto;padding:0 2rem}
@@ -1034,9 +1150,10 @@
 <section id="hero">
   <div class="hero-inner">
     <div class="hero-text">
+      <div class="shareware-badge">CHAPTER I · SHAREWARE · FREE TO DOWNLOAD &amp; SHARE</div>
       <div class="hero-kicker">OASIS-Powered FPS</div>
       <h1 class="hero-h1">Rip and Tear.<br/><span>Find the Keycard.</span></h1>
-      <p class="hero-sub">Classic Doom gameplay meets real-world adventure. GPS-hidden keycards, weapons, and armour in real parks power your in-game arsenal — with AR demon combat coming to your city soon. Built on UZDoom, powered by the OASIS Omniverse and WEB5 STAR API.</p>
+      <p class="hero-sub">Classic Doom gameplay meets real-world adventure. GPS-hidden keycards, weapons, and armour in real parks power your in-game arsenal — with AR demon combat coming to your city soon, powered by <a href="https://ourworld.oasisomniverse.one" target="_blank" rel="noopener">Our World</a>. Built on UZDoom, powered by the OASIS Omniverse and <a href="https://api.starnet.oasisomniverse.one" target="_blank" rel="noopener">WEB5 STAR API</a>.</p>
       <div class="hero-buttons">
         <a class="btn-primary" href="https://github.com/NextGenSoftwareUK/ODOOM/releases/tag/ODOOM_v.1.0.0_ALPHA" target="_blank" rel="noopener">Download ODOOM</a>
         <a class="btn-secondary" href="#features">Explore Features</a>
@@ -1196,7 +1313,7 @@
       <div class="feature-card">
         <span class="feature-icon">🏆</span>
         <div class="feature-title">NFT Kill Minting</div>
-        <p class="feature-desc">Legendary kills — boss demons, rare encounters — trigger automatic NFT minting via the STAR API. An immutable on-chain record of your most glorious carnage, tradeable in any Web3 marketplace.</p>
+        <p class="feature-desc">Legendary kills — boss demons, rare encounters — trigger automatic NFT minting via the <a href="https://api.starnet.oasisomniverse.one" target="_blank" rel="noopener">STAR API</a>. An immutable on-chain record of your most glorious carnage, tradeable in any Web3 marketplace.</p>
       </div>
 
       <div class="feature-card">
@@ -1208,13 +1325,13 @@
       <div class="feature-card">
         <span class="feature-icon">🧬</span>
         <div class="feature-title">Avatar SSO</div>
-        <p class="feature-desc">One OASIS avatar across all Omniverse games. Karma, achievements, inventory, and identity are persistent. Log in once, play everywhere — ODOOM, OQuake, Our World, and beyond.</p>
+        <p class="feature-desc">One OASIS avatar across all Omniverse games. Karma, achievements, inventory, and identity are persistent. Log in once, play everywhere — ODOOM, OQuake, <a href="https://ourworld.oasisomniverse.one" target="_blank" rel="noopener">Our World</a>, and beyond.</p>
       </div>
 
       <div class="feature-card coming-soon">
         <span class="feature-icon">📡</span>
         <div class="feature-title">AR Demon Combat</div>
-        <p class="feature-desc">Point your phone at a park and watch the invasion begin. Pinky demons behind the bandstand. Cacodemons above the pond. Real-world locations, real-time augmented slaughter.</p>
+        <p class="feature-desc">Point your phone at a park and watch the invasion begin. Pinky demons behind the bandstand. Cacodemons above the pond. Real-world locations, real-time augmented slaughter — powered by <a href="https://ourworld.oasisomniverse.one" target="_blank" rel="noopener">Our World</a>.</p>
         <span class="feature-badge">Coming Soon</span>
       </div>
 
@@ -1226,14 +1343,38 @@
 
       <div class="feature-card">
         <span class="feature-icon">📦</span>
-        <div class="feature-title">Advanced Inventory</div>
-        <p class="feature-desc">Pick up health, armour, ammo and powerups even when already at max capacity — bank them for the next tough fight. Stack or unlock items individually. Send anything from your inventory to friends or clan members in any connected OASIS game.</p>
+        <div class="feature-title">Stack Everything</div>
+        <p class="feature-desc">Pick up every item in every map — health packs, armour, ammo, powerups, keycards — even at max capacity. Bank them and choose when to deploy. Finally beat that level you could never get past by stockpiling for days beforehand. And for modders: create brutal new maps designed around stacking — knowing players can prepare across multiple sessions. DOOM becomes an FPS/RPG hybrid and a brand new cross-game modding genre is born.</p>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-icon">📤</span>
+        <div class="feature-title">Send to Avatar / Send to Clan</div>
+        <p class="feature-desc">Farm health packs, powerups, weapons, ammo and keycards and send them directly to clan members fighting fierce battles or tournaments — in ODOOM, OQUAKE or any connected game. Assign a dedicated farmer while your best combat players burn through supplies. Build emergency stockpiles. Coordinate clan logistics across the entire Omniverse. A whole new level of strategy DOOM never had.</p>
       </div>
 
       <div class="feature-card">
         <span class="feature-icon">🎯</span>
         <div class="feature-title">GeoHotSpot Triggers</div>
         <p class="feature-desc">Embed GeoHotSpot triggers anywhere in your maps — inside quests, as objectives, or standalone. Trigger audio clips, video playback, text overlays, scripting events and NPC spawns at real-world GPS coordinates or specific in-game locations.</p>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-icon">⚡</span>
+        <div class="feature-title">Quick Combat Actions</div>
+        <p class="feature-desc">No time to open your inventory mid-battle? Press <strong style="color:var(--red)">C</strong> to instantly use a health pack or <strong style="color:var(--red)">F</strong> to slam on armour without breaking combat flow. Bank dozens of supplies from farming sessions and deploy them in a single keypress when it matters most.</p>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-icon">🦸</span>
+        <div class="feature-title">Karma Powers Your Stats</div>
+        <p class="feature-desc">Do good in real life through <a href="https://ourworld.oasisomniverse.one" target="_blank" rel="noopener">Our World</a> — pick up litter, exercise, eat healthy, help your community — and your ODOOM avatar gets measurably stronger. Max health, max armour, max ammo and movement speed all increase as your karma grows. The real-life superhero training program is real. You become the Doom Slayer.</p>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-icon">⚙️</span>
+        <div class="feature-title">Fully Configurable</div>
+        <p class="feature-desc">Server operators, tournament organisers and modders control everything via <a href="https://github.com/NextGenSoftwareUK/OASIS/blob/master/OASIS%20Omniverse/ODOOM/build/oasisstar.json" target="_blank" rel="noopener"><strong style="color:var(--red)">oasisstar.json</strong></a> — configurable locally or on the server. Toggle stacking per item type, set custom max health and armour caps, choose which items and monster kills mint as NFTs (configurable per monster type), enable auto-use on pickup, set the NFT provider, and much more. In future, all settings will also be configurable directly through <a href="https://oportal.oasisomniverse.one" target="_blank" rel="noopener" style="color:var(--cyan);text-decoration:none">OPORTAL</a> and <a href="https://starnet.oasisomniverse.one" target="_blank" rel="noopener" style="color:var(--cyan);text-decoration:none">STARNET</a>.</p>
       </div>
 
       <div class="feature-card">
@@ -1249,6 +1390,24 @@
         <span class="feature-badge">Coming Soon</span>
       </div>
 
+      <div class="feature-card">
+        <span class="feature-icon">🌐</span>
+        <div class="feature-title">OASIS Omniverse HUB</div>
+        <p class="feature-desc">A persistent inter-dimensional hub letting you teleport between any map in any connected game instantly — carrying your full inventory, karma and quest state with you. One portal. Every world.</p>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-icon">🖥️</span>
+        <div class="feature-title">Shared HUD</div>
+        <p class="feature-desc">A unified heads-up display across every OASIS game — live inventory counts, active quests, friend locations, messages and avatar stats visible at a glance, whether you're in ODOOM, OQUAKE or <a href="https://ourworld.oasisomniverse.one" target="_blank" rel="noopener">Our World</a>.</p>
+      </div>
+
+      <div class="feature-card">
+        <span class="feature-icon">🏴</span>
+        <div class="feature-title">Clan Management</div>
+        <p class="feature-desc">Form and manage OASIS clans with full role assignment — farmers, combat specialists, scouts. Track shared stockpiles, coordinate supply drops mid-battle, build emergency reserves, and wage clan-vs-clan wars across the entire Omniverse.</p>
+      </div>
+
     </div>
   </div>
 </section>
@@ -1259,7 +1418,7 @@
     <div class="reveal">
       <div class="section-label">See It In Action</div>
       <h2 class="section-title">Watch ODOOM</h2>
-      <p class="section-intro">Live tech demo showcasing OGEngine integration, cross-game inventory, GeoHotSpot triggers and OASIS Avatar SSO in action.</p>
+      <p class="section-intro">Live tech demo showcasing <a href="https://ogengine.oasisomniverse.one" target="_blank" rel="noopener">OGEngine</a> integration, cross-game inventory, GeoHotSpot triggers and OASIS Avatar SSO in action.</p>
     </div>
     <div class="vid-grid reveal">
       <div class="vid-card">
@@ -1267,10 +1426,219 @@
         <div class="vid-info">
           <div class="vid-kicker">ODOOM · TECH DEMO</div>
           <div class="vid-title">OGENGINE INTEGRATION DEMO</div>
-          <div class="vid-text">Live demonstration of ODOOM running on OGEngine — OASIS Avatar SSO, shared inventory, cross-game quests and GeoHotSpot triggers in action.</div>
+          <div class="vid-text">Live demonstration of ODOOM running on <a href="https://ogengine.oasisomniverse.one" target="_blank" rel="noopener">OGEngine</a> — OASIS Avatar SSO, shared inventory, cross-game quests and GeoHotSpot triggers in action.</div>
         </div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- TRIBUTE -->
+<section id="tribute-doom">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-label">Bringing It Full Circle</div>
+      <h2 class="section-title">Honouring the Founders of FPS</h2>
+    </div>
+    <div class="tribute-intro-doom reveal">
+      <p>John Carmack and John Romero didn't just make games — they invented a genre that rewired how we experience virtual worlds. DOOM and Quake were the first steps toward a shared digital universe, and both Johns have spoken about their metaverse dreams. ODOOM doesn't just honour that legacy — <strong>it fulfils it</strong>. By porting the original games first and building the OASIS Omniverse on top, we close the loop they opened back in 1993.</p>
+    </div>
+    <div class="meta-grid reveal">
+      <div class="meta-card">
+        <span class="meta-card-icon">📤</span>
+        <div class="meta-card-title">Send to Avatar · Send to Clan</div>
+        <div class="meta-card-body">
+          <p>Farm health packs, armour, ammo, powerups and keycards — then send them to your mates or clan mid-battle. One player farms, another fights. Clans manage stockpiles across games and tournaments.</p>
+          <p>This is cross-game logistics that Doom and Quake never had. A whole new tier of long-term strategy and teamwork.</p>
+        </div>
+      </div>
+      <div class="meta-card">
+        <span class="meta-card-icon">🎮</span>
+        <div class="meta-card-title">FPS Meets RPG — A New Genre</div>
+        <div class="meta-card-body">
+          <p>Stack every item on every map. Choose when to deploy a stimpack, a BFG, or a keycard. Save that megasphere for the Cyberdemon. Finally finish that map you could never beat.</p>
+          <p>DOOM and Quake become RPGs with guns. A new genre — <em>cross-game modding</em> — emerges where maps are designed around stacking strategy from the ground up.</p>
+        </div>
+      </div>
+    </div>
+    <div class="tribute-quote reveal">
+      <p>"We chose to port DOOM and Quake first because they deserve it. They are the founding games of modern FPS — and this brings everything full circle. The true metaverse begins where they left off."</p>
+      <cite>— NextGen Software, OASIS Omniverse</cite>
+    </div>
+  </div>
+</section>
+
+<!-- BECOME -->
+<section id="become">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-label">You Are the Doom Slayer</div>
+      <h2 class="section-title">Become the Legend</h2>
+    </div>
+    <div class="become-intro-doom reveal">
+      <p>ODOOM doesn't just simulate a hero — it <strong>makes you one</strong>. Your real-world actions in <a href="https://ourworld.oasisomniverse.one" target="_blank" rel="noopener">Our World</a> feed directly into your Doom Slayer's power. The more good you do in real life — litter pick, help your community, exercise, eat well — the stronger you become in-game. This is the beginning of the true metaverse: a superhero training program wrapped in the greatest FPS ever made.</p>
+    </div>
+    <div class="become-grid reveal">
+      <div class="become-card green">
+        <span class="become-card-icon">🦸</span>
+        <div class="become-card-title">Karma Powers Your Stats</div>
+        <div class="become-card-body">
+          <p>Earn karma in <a href="https://ourworld.oasisomniverse.one" target="_blank" rel="noopener">Our World</a> by completing real-life quests. That karma flows directly into ODOOM, increasing your maximum health, armour, ammo capacity and movement speed.</p>
+          <div class="karma-actions">
+            <span class="karma-pill">Pick up litter</span>
+            <span class="karma-pill">Help the community</span>
+            <span class="karma-pill">Exercise</span>
+            <span class="karma-pill">Eat healthy</span>
+            <span class="karma-pill">Meditate</span>
+            <span class="karma-pill">Volunteer</span>
+            <span class="karma-pill">Complete IRL quests</span>
+          </div>
+          <div class="stat-boosts">
+            <div class="stat-boost"><span class="stat-boost-label">MAX HEALTH</span><span class="stat-boost-val">↑ with karma</span></div>
+            <div class="stat-boost"><span class="stat-boost-label">MAX ARMOUR</span><span class="stat-boost-val">↑ with karma</span></div>
+            <div class="stat-boost"><span class="stat-boost-label">MAX AMMO</span><span class="stat-boost-val">↑ with karma</span></div>
+            <div class="stat-boost"><span class="stat-boost-label">SPEED</span><span class="stat-boost-val">↑ with karma</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="become-card gold">
+        <span class="become-card-icon">⚡</span>
+        <div class="become-card-title">Quick Combat Actions</div>
+        <div class="become-card-body">
+          <p>No more fumbling through menus mid-firefight. Instant hotkeys let you deploy health, armour or check objectives without breaking stride — or getting fragged.</p>
+          <div class="hotkeys">
+            <div class="hotkey"><span class="hotkey-key">C</span><span class="hotkey-label">USE HEALTH</span></div>
+            <div class="hotkey"><span class="hotkey-key">F</span><span class="hotkey-label">USE ARMOUR</span></div>
+            <div class="hotkey"><span class="hotkey-key">I</span><span class="hotkey-label">INVENTORY</span></div>
+            <div class="hotkey"><span class="hotkey-key">Q</span><span class="hotkey-label">QUESTS</span></div>
+            <div class="hotkey"><span class="hotkey-key">O</span><span class="hotkey-label">OBJECTIVES</span></div>
+            <div class="hotkey"><span class="hotkey-key">X</span><span class="hotkey-label">VIEW XP</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="become-card full">
+        <span class="become-card-icon">⚙️</span>
+        <div class="become-card-title">Fully Configurable — oasisstar.json</div>
+        <div class="become-card-body">
+          <p style="margin-bottom:1rem">Every rule is tunable via <a href="https://github.com/NextGenSoftwareUK/OASIS/blob/master/OASIS%20Omniverse/ODOOM/build/oasisstar.json" target="_blank" rel="noopener"><code style="color:var(--cyan)">oasisstar.json</code></a> — per server, per tournament, per map. In future, these settings will also be configurable through the <strong style="color:var(--cyan)"><a href="https://oportal.oasisomniverse.one" target="_blank" rel="noopener">OPORTAL</a> &amp; <a href="https://starnet.oasisomniverse.one" target="_blank" rel="noopener">STARNET</a></strong>.</p>
+          <div class="config-grid-doom">
+            <div class="config-row"><span class="config-key">stack_weapons</span><span class="config-val">true</span></div>
+            <div class="config-row"><span class="config-key">stack_armor</span><span class="config-val">true</span></div>
+            <div class="config-row"><span class="config-key">stack_powerups</span><span class="config-val">true</span></div>
+            <div class="config-row"><span class="config-key">stack_keys</span><span class="config-val">true</span></div>
+            <div class="config-row"><span class="config-key">mint_weapons</span><span class="config-val">true</span></div>
+            <div class="config-row"><span class="config-key">mint_armor</span><span class="config-val">true</span></div>
+            <div class="config-row"><span class="config-key">mint_keys</span><span class="config-val">true</span></div>
+            <div class="config-row"><span class="config-key">mint_powerups</span><span class="config-val">true</span></div>
+            <div class="config-row"><span class="config-key">mint_monster_imp</span><span class="config-val">true</span></div>
+            <div class="config-row"><span class="config-key">mint_monster_cacodemon</span><span class="config-val">true</span></div>
+            <div class="config-row"><span class="config-key">mint_monster_pinky</span><span class="config-val">true</span></div>
+            <div class="config-row"><span class="config-key">mint_monster_cyberdemon</span><span class="config-val">true</span></div>
+            <div class="config-row"><span class="config-key">mint_monster_baron</span><span class="config-val">true</span></div>
+            <div class="config-row"><span class="config-key">max_health</span><span class="config-val">200</span></div>
+            <div class="config-row"><span class="config-key">max_armor</span><span class="config-val">200</span></div>
+            <div class="config-row"><span class="config-key">use_health_on_pickup</span><span class="config-val">false</span></div>
+            <div class="config-row"><span class="config-key">use_armor_on_pickup</span><span class="config-val">false</span></div>
+            <div class="config-row"><span class="config-key">use_powerup_on_pickup</span><span class="config-val">false</span></div>
+            <div class="config-row"><span class="config-key">always_allow_pickup_if_max</span><span class="config-val">true</span></div>
+            <div class="config-row"><span class="config-key">nft_provider</span><span class="config-val">SolanaOASIS</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EPIC QUEST -->
+<section id="epic-quest-doom">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="rift-banner">⚠ SPACETIME RIFT DETECTED · MULTIVERSE BREACH IN PROGRESS</div>
+      <div class="section-label">The Never-Ending Story</div>
+      <h2 class="section-title">Epic Cross-Game Quest Line</h2>
+    </div>
+    <div class="quest-intro-doom reveal">
+      <p>The UAC scientists have really done it this time. A hole torn through the space-time continuum has ripped rifts across the multiverse — Quake monsters bleeding into Doom's corridors, Doom demons stalking Quake's arenas, and strange keys from parallel worlds locking doors in both. Find a keycard in ODOOM to unlock a portal in OQuake. Track down powerups in <a href="https://ourworld.oasisomniverse.one" target="_blank" rel="noopener">Our World</a>. The story never ends — as new games join the OASIS Omniverse, the quest expands to consume them too.</p>
+    </div>
+    <div class="shareware-note reveal">
+      <p>Just like the original <strong>DOOM Episode 1</strong> launched as shareware — free to play and free to share — <strong>Chapter I of the ODOOM quest line will be completely free</strong>. When it drops in Q3/Q4 2026, download it, play it, pass it on. The story of the Doom Slayer continues from exactly where Carmack and Romero left it.</p>
+      <a class="shareware-dl" href="https://github.com/NextGenSoftwareUK/ODOOM/releases/tag/ODOOM_v.1.0.0_ALPHA" target="_blank" rel="noopener">▶ Wishlist — Coming Q3/Q4 2026</a>
+    </div>
+    <div class="psd-teaser reveal">
+      <div class="psd-label">⬡ TRANSMISSION INTERCEPTED · ORIGIN UNKNOWN</div>
+      <p>Something is coming through the rifts that isn't a demon. Deep in Quake's dimensions, Champions have reportedly recovered an artefact of alien origin — something they're calling the <strong>Phase Shift Device</strong>. Early intelligence suggests it may be the key to crossing between worlds. Watch for it. In the real world, <a href="https://ourworld.oasisomniverse.one" target="_blank" rel="noopener">Our World</a> is already listening.</p>
+    </div>
+    <div class="quest-chapters reveal">
+      <div class="chapter-tile ch-1">
+        <div class="chapter-num">CHAPTER I · COMING Q3/Q4 2026 · SHAREWARE</div>
+        <div class="chapter-flow">ODOOM → OQuake → ODOOM → Our World → ODOOM</div>
+        <div class="chapter-title">The UAC Breach</div>
+        <div class="chapter-desc">The rift opens in a UAC facility on Mars. Fight through Doom's corridors — then a portal tears open to Quake's dimension. Find the rune fragment there, return to Mars, complete a real-world quest in <a href="https://ourworld.oasisomniverse.one" target="_blank" rel="noopener">Our World</a>, and seal the breach. Chapter I ends. The Omniverse is changed forever.</div>
+      </div>
+      <div class="chapter-tile ch-2">
+        <div class="chapter-num">CHAPTER II · COMING SOON</div>
+        <div class="chapter-flow">ODOOM → OQuake → ODOOM3 → Our World → ···</div>
+        <div class="chapter-title">The Second Rift</div>
+        <div class="chapter-desc">The breach didn't close — it widened. New rifts open into ODOOM3's hellscapes. Monsters and artefacts bleed across all three dimensions. The quest continues, expanding to consume every game that joins the Omniverse.</div>
+      </div>
+      <div class="chapter-tile ch-more">
+        <div class="chapter-num">CHAPTER III AND BEYOND · FOREVER</div>
+        <div class="chapter-flow">Every game · Every world · Every rift</div>
+        <div class="chapter-title">The Endless Omniverse</div>
+        <div class="chapter-desc">As Wolfenstein, Duke Nukem, Quake 2, Minecraft and more join the OASIS Omniverse, each new chapter pulls them into the story. A never-ending adventure spanning every dimension, every era, every hero.</div>
+      </div>
+      <div class="chapter-tile ch-more">
+        <div class="chapter-num">AI SHAPES THE STORY</div>
+        <div class="chapter-flow">Frontier AI · Evolving narrative · Infinite replayability</div>
+        <div class="chapter-title">No Two Playthroughs Alike</div>
+        <div class="chapter-desc">AI-powered monsters, NPCs and dungeon masters adapt the story to your choices. Every run through the quest line is unique. The Omniverse remembers — and it evolves.</div>
+      </div>
+    </div>
+    <div class="quest-tagline reveal">THE STORY OF DOOM NEVER ENDS · IT JUST KEEPS EXPANDING</div>
+  </div>
+</section>
+
+<!-- AI COMBAT -->
+<section id="ai-doom">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-label">A New Kind of Enemy</div>
+      <h2 class="section-title">AI-Powered Combat</h2>
+    </div>
+    <div class="ai-intro-doom reveal">
+      <p>The demons got smarter. Frontier AI agents now control the most powerful monsters in ODOOM — coordinating, learning your strategies, evolving in real time and raising the stakes to a level no scripted enemy ever could. This is not a difficulty slider. This is <em>actual intelligence</em> hunting you through Hell.</p>
+    </div>
+    <div class="ai-agents reveal">
+      <span class="ai-agent-pill">Claude</span>
+      <span class="ai-agent-pill">OpenAI</span>
+      <span class="ai-agent-pill">Grok</span>
+      <span class="ai-agent-pill">Gemini</span>
+      <span class="ai-agent-pill">DeepSeek</span>
+      <span class="ai-agent-pill">+ more frontier agents</span>
+    </div>
+    <div class="ai-modes reveal">
+      <div class="ai-tile">
+        <span class="ai-tile-icon">🏟️</span>
+        <div class="ai-tile-title">AI Cyberdemon Tournament</div>
+        <div class="ai-tile-desc">Each frontier AI agent controls a Cyberdemon. They battle it out in a dedicated tournament arena — coordinating attacks, adapting tactics and competing to be the last demon standing. Watch or play. Either way, it's terrifying.</div>
+      </div>
+      <div class="ai-tile">
+        <span class="ai-tile-icon">🧠</span>
+        <div class="ai-tile-title">Co-ordinated Monster Intelligence</div>
+        <div class="ai-tile-desc">AI agents control monster squads that communicate and co-ordinate in real time. They analyse your movement patterns, remember your tactics and adjust. Every encounter is unique. Every room could be a trap.</div>
+      </div>
+      <div class="ai-tile">
+        <span class="ai-tile-icon">📈</span>
+        <div class="ai-tile-title">Evolving Difficulty</div>
+        <div class="ai-tile-desc">The AI learns across sessions. The longer you play, the smarter the demons get. Your favourite shortcuts get covered. Your go-to weapon combinations get countered. The Omniverse remembers everything — and it uses it against you.</div>
+      </div>
+      <div class="ai-tile">
+        <span class="ai-tile-icon">⚔️</span>
+        <div class="ai-tile-title">Human vs AI Gauntlet</div>
+        <div class="ai-tile-desc">Face a gauntlet of AI-controlled bosses, each powered by a different frontier agent with its own playstyle and strategy. Survive all of them to claim your place on the Omniverse leaderboard. The possibilities are endless — we are only just getting started.</div>
+      </div>
+    </div>
+    <div class="ai-tagline reveal">THE DEMONS EVOLVED · CAN YOU?</div>
   </div>
 </section>
 
@@ -1287,7 +1655,7 @@
       <div class="rw-card red">
         <div class="rw-num">01</div>
         <div class="rw-title">Find the Keycard</div>
-        <p class="rw-desc">Red, blue, and yellow keycards are embedded at GPS coordinates in public parks worldwide. Open the ODOOM companion app, navigate to the marker, and physically collect the keycard to unlock the corresponding in-game door.</p>
+        <p class="rw-desc">Red, blue, and yellow keycards are embedded at GPS coordinates in public parks worldwide. Open the <a href="https://ourworld.oasisomniverse.one" target="_blank" rel="noopener">Our World</a> companion app, navigate to the marker, and physically collect the keycard to unlock the corresponding in-game door.</p>
       </div>
       <div class="rw-card orange">
         <div class="rw-num">02</div>
@@ -1297,7 +1665,7 @@
       <div class="rw-card cyan">
         <div class="rw-num">03</div>
         <div class="rw-title">Fight IRL — Coming Soon</div>
-        <p class="rw-desc">AR demon combat will bring Doom's infernal horde into augmented reality. Walk your local park and engage demons in the real world using your phone. GPS-anchored spawn points, weather-adaptive enemy variants, and real-time multiplayer clashes.</p>
+        <p class="rw-desc">Powered by <a href="https://ourworld.oasisomniverse.one" target="_blank" rel="noopener">Our World</a>, AR demon combat will bring Doom's infernal horde into augmented reality. Walk your local park and engage demons in the real world using your phone. GPS-anchored spawn points, weather-adaptive enemy variants, and real-time multiplayer clashes.</p>
       </div>
     </div>
 
@@ -1305,7 +1673,7 @@
       <div class="how-step">
         <div class="how-step-num">1</div>
         <div class="how-step-label">Open ODOOM</div>
-        <div class="how-step-desc">Launch the game or companion app on your device</div>
+        <div class="how-step-desc">Launch ODOOM or the <a href="https://ourworld.oasisomniverse.one" target="_blank" rel="noopener">Our World</a> companion app on your device</div>
       </div>
       <div class="how-step">
         <div class="how-step-num">2</div>
@@ -1364,46 +1732,66 @@
 
     <div class="roadmap-grid reveal">
 
-      <div class="rm-tile">
-        <div class="rm-phase">PHASE 1</div>
+      <div class="rm-tile done">
+        <div class="rm-kicker-gold">PHASE 1</div>
         <div class="rm-title">ODOOM Core + OGEngine</div>
-        <p class="rm-desc">UZDoom fork with full OASIS integration, OGEngine connection, WEB5 STAR API, shared inventory, avatar SSO, and karma system.</p>
-        <span class="rm-badge in-progress">In Progress</span>
+        <p class="rm-desc">UZDoom fork with full OASIS integration, OGEngine connection, <a href="https://api.starnet.oasisomniverse.one" target="_blank" rel="noopener">WEB5 STAR API</a>, shared inventory, avatar SSO, karma system, and NFT minting live.</p>
+        <span class="rm-badge done">DONE</span>
       </div>
 
-      <div class="rm-tile">
-        <div class="rm-phase">PHASE 2</div>
+      <div class="rm-tile active">
+        <div class="rm-kicker-gold">PHASE 2</div>
         <div class="rm-title">Real-World Item Discovery</div>
-        <p class="rm-desc">GPS keycard and weapon geo-caching in parks, companion app integration, real-to-game item sync via the WEB4 OASIS API.</p>
-        <span class="rm-badge in-progress">In Progress</span>
+        <p class="rm-desc">GPS keycard and weapon geo-caching in parks worldwide. <a href="https://ourworld.oasisomniverse.one" target="_blank" rel="noopener">Our World</a> companion app integration, real-to-game item sync via the <a href="https://api.web4.oasisomniverse.one" target="_blank" rel="noopener">WEB4 OASIS API</a>.</p>
+        <span class="rm-badge in-progress">IN PROGRESS</span>
+      </div>
+
+      <div class="rm-tile active">
+        <div class="rm-kicker-gold">PHASE 3</div>
+        <div class="rm-title">NFT Economy</div>
+        <p class="rm-desc">NFT minting is live — legendary kills, boss takedowns, and rare items are already minted as on-chain collectables. The OASIS Marketplace is in progress and coming soon, with much more planned.</p>
+        <span class="rm-badge in-progress">IN PROGRESS</span>
+      </div>
+
+      <div class="rm-tile active">
+        <div class="rm-kicker-gold">PHASE 4</div>
+        <div class="rm-title">OASIS OS / HUB / HUD</div>
+        <p class="rm-desc">The unified OASIS Operating System — a persistent HUB to teleport between any map in any game, with a shared HUD for inventory, quests, friends and avatar stats across every connected world.</p>
+        <span class="rm-badge in-progress">IN PROGRESS</span>
+      </div>
+
+      <div class="rm-tile active">
+        <div class="rm-kicker-gold">PHASE 5</div>
+        <div class="rm-title">Epic Cross-Game Quest Line</div>
+        <p class="rm-desc">Chapter I is here — shareware, just like Episode 1 of the original. The UAC scientists have torn a hole in space/time. Rifts bleed monsters and artefacts across every world. The story never ends.</p>
+        <span class="rm-badge in-progress">IN PROGRESS</span>
       </div>
 
       <div class="rm-tile">
-        <div class="rm-phase">PHASE 3</div>
-        <div class="rm-title">NFT Kill Registry</div>
-        <p class="rm-desc">On-chain recording of legendary kills and boss takedowns. Automatic NFT minting, on-chain provenance, cross-marketplace trading.</p>
-        <span class="rm-badge coming-soon">Coming Soon</span>
-      </div>
-
-      <div class="rm-tile">
-        <div class="rm-phase">PHASE 4</div>
+        <div class="rm-kicker-cyan">PHASE 6</div>
         <div class="rm-title">AR Demon Combat</div>
-        <p class="rm-desc">Augmented reality demon encounters in real parks. GPS-anchored spawn points, weather-adaptive enemies, real-time AR multiplayer slaughter.</p>
-        <span class="rm-badge coming-soon">Coming Soon</span>
+        <p class="rm-desc">Powered by <a href="https://ourworld.oasisomniverse.one" target="_blank" rel="noopener">Our World</a> — project ODOOM's demons into real-world parks via augmented reality. GPS-anchored spawn points, weather-adaptive enemies, real-time AR multiplayer slaughter on your street.</p>
+        <span class="rm-badge coming-soon">COMING SOON</span>
       </div>
 
       <div class="rm-tile">
-        <div class="rm-phase">PHASE 5</div>
-        <div class="rm-title">Clan &amp; Multiplayer</div>
-        <p class="rm-desc">Form OASIS clans, coordinate real-world item hunts as teams, share inventory between clan members, and wage clan-vs-clan AR wars.</p>
-        <span class="rm-badge coming-soon">Coming Soon</span>
+        <div class="rm-kicker-cyan">PHASE 7</div>
+        <div class="rm-title">AI Monsters &amp; NPCs</div>
+        <p class="rm-desc">Frontier AI agents — Claude, ChatGPT, Grok, Gemini, DeepSeek and others — take control of demons. AI Cyberdemon Tournaments. Battle modes where monsters coordinate, learn your tactics, and evolve. The possibilities are endless.</p>
+        <span class="rm-badge coming-soon">COMING SOON</span>
+      </div>
+
+      <div class="rm-tile">
+        <div class="rm-kicker-cyan">PHASE 8</div>
+        <div class="rm-title">Expanding the Omniverse</div>
+        <p class="rm-desc">Porting Doom 3, Wolfenstein 3D, Duke Nukem 3D, Quake II, Quake III Arena, a Minecraft clone, a Morrowind MMORPG clone, and many more — every new title inheriting the full cross-game ecosystem from day one.</p>
+        <span class="rm-badge coming-soon">COMING SOON</span>
       </div>
 
       <div class="rm-tile future">
-        <div class="rm-phase">BEYOND</div>
-        <div class="rm-title">More Hell to Come</div>
-        <p class="rm-desc">Procedurally generated real-world events. City-scale invasions. Cross-Omniverse tournaments. The gates of Hell have no final level.</p>
-        <span class="rm-badge future-badge">Future</span>
+        <div class="rm-kicker-dim">ALWAYS EVOLVING</div>
+        <div class="rm-title" style="color:#a8bfd8">More Hell to Come</div>
+        <p class="rm-desc">Cross-game clans, city-scale invasions, real-world tournament integration, OLAND digital land, multiplayer AR battles, and much more on the horizon. The gates of Hell have no final level.</p>
       </div>
 
     </div>
@@ -1417,7 +1805,8 @@
     <h2 class="section-title">Ready to Rip and Tear?</h2>
     <p class="cta-sub">Download ODOOM, explore the OASIS Omniverse, and find your first keycard. The parks are already hiding your arsenal.</p>
     <div class="cta-buttons">
-      <a class="btn-primary" href="https://github.com/NextGenSoftwareUK/ODOOM/releases/tag/ODOOM_v.1.0.0_ALPHA" target="_blank" rel="noopener">Download Now</a>
+      <a class="btn-primary" href="https://github.com/NextGenSoftwareUK/ODOOM/releases/tag/ODOOM_v.1.0.0_ALPHA" target="_blank" rel="noopener">Download ODOOM</a>
+      <a class="btn-secondary" href="https://github.com/NextGenSoftwareUK/ODOOM-Editor/releases/tag/ODOOM_Editor_v1.0.0_ALPHA" target="_blank" rel="noopener">Download Doom Editor</a>
       <a class="btn-cyan" href="https://oasisomniverse.one" target="_blank" rel="noopener">OASIS Omniverse</a>
       <a class="btn-gold-filled" href="https://ogengine.oasisomniverse.one" target="_blank" rel="noopener">OGEngine</a>
     </div>
@@ -1429,7 +1818,7 @@
   <div class="footer-inner">
     <div class="footer-brand">
       <div class="footer-logo-text">ODOOM</div>
-      <p class="footer-desc">A modified UZDoom integrated with the OASIS Omniverse. Real-world loot, demon slaying, and AR combat — powered by OGEngine and the WEB5 STAR API.</p>
+      <p class="footer-desc">A modified UZDoom integrated with the OASIS Omniverse. Real-world loot, demon slaying, and AR combat — powered by <a href="https://ogengine.oasisomniverse.one" target="_blank" rel="noopener">OGEngine</a> and the <a href="https://api.starnet.oasisomniverse.one" target="_blank" rel="noopener">WEB5 STAR API</a>.</p>
     </div>
     <div class="footer-grid">
       <div>
@@ -1498,7 +1887,10 @@
       </div>
     </div>
   </div>
-  <div class="footer-bottom">
+  <div style="max-width:1400px;margin:0 auto;padding:1.5rem 2rem 0;border-top:1px solid rgba(255,51,85,.1);text-align:center">
+    <p style="font-size:.72rem;color:#a8bfd8;max-width:860px;margin:0 auto;line-height:1.6">DOOM&reg; is a registered trademark of id Software LLC, a ZeniMax Media company. ODOOM is an independent fan modification built on the GPL-licensed UZDoom engine and is not affiliated with, endorsed by, or sponsored by id Software, ZeniMax Media, or Bethesda Softworks. ODOOM requires a legitimate copy of DOOM to run. All DOOM game assets remain the property of their respective owners.</p>
+  </div>
+  <div class="footer-bottom" style="border-top:none;padding-top:.75rem">
     <p>&copy; 2026 <a href="https://nextgenworld.co.uk">NextGen Software Ltd.</a> All rights reserved.</p>
     <p>Part of the <a href="https://oasisomniverse.one" target="_blank" rel="noopener">OASIS Omniverse</a> ecosystem.</p>
   </div>
