@@ -718,7 +718,7 @@
       line-height: 1.3;
     }
 
-    .rm-desc { font-size: 0.93rem; color: var(--text); margin-bottom: 1rem; }
+    .rm-desc { font-size: 1.05rem; color: var(--text); margin-bottom: 1rem; }
 
     .rm-badge {
       display: inline-block;
@@ -864,9 +864,9 @@
     }
 
     .footer-inner {
-      max-width: 1400px;
+      max-width: 1200px;
       margin: 0 auto;
-      padding: 4rem 2rem 2rem;
+      padding: 4rem 2.5rem 2rem;
     }
     .footer-grid {
       display: grid;
@@ -945,16 +945,17 @@
       font-size: 1rem;
       color: var(--text);
       text-decoration: none;
-      transition: color 0.2s;
+      transition: filter .3s ease, color .3s ease;
     }
 
-    .footer-bottom p{color:#a8bfd8;font-size:.82rem}.footer-bottom a{color:#a8bfd8 !important;text-decoration:none !important;border-bottom:none !important}
+    .footer-bottom p{color:#a8bfd8;font-size:.82rem}.footer-bottom a{color:#a8bfd8;text-decoration:none !important;border-bottom:none !important}
+    .footer-bottom a:hover{color:var(--red);filter:drop-shadow(0 0 8px rgba(255,51,85,1)) drop-shadow(0 0 20px rgba(255,51,85,.8)) drop-shadow(0 0 40px rgba(255,51,85,.4))}
     footer a:hover { color: var(--red); filter:drop-shadow(0 0 8px rgba(255,51,85,1)) drop-shadow(0 0 20px rgba(255,51,85,.8)) drop-shadow(0 0 40px rgba(255,51,85,.4)) }
 
     .footer-bottom {
-      max-width: 1400px;
+      max-width: 1200px;
       margin: 0 auto;
-      padding: 1.5rem 2rem;
+      padding: 1.5rem 2.5rem;
       border-top: 1px solid rgba(255, 51, 85, 0.1);
       display: flex;
       justify-content: space-between;
@@ -968,10 +969,6 @@
       gap: 1rem;
 }
 
-    .footer-bottom a {
-      color: rgba(168, 191, 216, 0.45);
-      text-decoration: none;
-    }
 
 
 
@@ -1037,7 +1034,7 @@
   .become-card.green .become-card-title{color:#00cc88}
   .become-card.gold .become-card-title{color:var(--gold)}
   .become-card.full .become-card-title{color:var(--cyan)}
-  .become-card-body{color:#ffffff;font-size:.93rem;line-height:1.7}
+  .become-card-body{color:#ffffff;font-size:1.05rem;line-height:1.7}
   .karma-actions{display:flex;flex-wrap:wrap;gap:.5rem;margin:1rem 0}
   .karma-pill{font-family:'Share Tech Mono',monospace;font-size:.7rem;letter-spacing:.12em;padding:.28rem .75rem;border-radius:3px;background:rgba(0,204,136,.12);border:1px solid rgba(0,204,136,.3);color:#00cc88}
   .stat-boosts{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:.7rem;margin-top:1rem}
@@ -1062,7 +1059,7 @@
   .meta-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
   .meta-card-icon{font-size:2rem;margin-bottom:1rem;display:block}
   .meta-card-title{font-family:'Orbitron',sans-serif;font-size:.9rem;font-weight:700;letter-spacing:.08em;color:var(--gold);text-transform:uppercase;margin-bottom:.8rem}
-  .meta-card-body{color:#ffffff;font-size:.95rem;line-height:1.7}
+  .meta-card-body{color:#ffffff;font-size:1.05rem;line-height:1.7}
   .meta-card-body p{margin-bottom:.8rem}
   .meta-card-body p:last-child{margin-bottom:0}
   .tribute-quote{max-width:760px;margin:0 auto;text-align:center;padding:2.5rem;border:1px solid rgba(240,165,0,.2);border-radius:10px;background:rgba(240,165,0,.04)}
@@ -1103,7 +1100,7 @@
   .ai-tile::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(180,120,255,.6),transparent)}
   .ai-tile-icon{font-size:1.8rem;margin-bottom:1rem;display:block}
   .ai-tile-title{font-family:'Orbitron',sans-serif;font-size:.82rem;font-weight:700;letter-spacing:.08em;color:#c4a0ff;text-transform:uppercase;margin-bottom:.6rem}
-  .ai-tile-desc{font-size:.92rem;color:#ffffff;line-height:1.6}
+  .ai-tile-desc{font-size:1.05rem;color:#ffffff;line-height:1.65}
   .ai-tagline{text-align:center;font-family:'Share Tech Mono',monospace;font-size:.82rem;letter-spacing:.18em;color:rgba(200,160,255,.85);padding-top:1.5rem;border-top:1px solid rgba(120,60,255,.15)}
   /* ── SINGULARITY ── */
   #singularity, #singularity-q { padding: 6rem 0; }
@@ -1112,7 +1109,7 @@
   .singularity-card { background: rgba(255,255,255,.025); border: 1px solid rgba(255,255,255,.08); border-radius: 10px; padding: 1.6rem 1.8rem; }
   .singularity-card-icon { font-size: 1.8rem; margin-bottom: .8rem; }
   .singularity-card-title { font-family: 'Orbitron', sans-serif; font-size: .82rem; font-weight: 700; letter-spacing: .06em; color: #e8f4ff; margin-bottom: .6rem; }
-  .singularity-card-desc { font-size: .88rem; color: #a8bfd8; line-height: 1.6; }
+  .singularity-card-desc { font-size: 1.05rem; color: #a8bfd8; line-height: 1.65; }
   .singularity-quote { background: rgba(0,229,255,.04); border: 1px solid rgba(0,229,255,.15); border-radius: 10px; padding: 2.5rem; text-align: center; max-width: 820px; margin: 0 auto; }
   .singularity-quote-line { font-family: 'Orbitron', sans-serif; font-size: 1.15rem; font-weight: 700; color: #e8f4ff; margin-bottom: .75rem; letter-spacing: .03em; }
   .singularity-quote-sub { font-family: 'Share Tech Mono', monospace; font-size: .78rem; letter-spacing: .18em; color: rgba(0,229,255,.7); text-transform: uppercase; }
@@ -1368,13 +1365,13 @@
       <div class="feature-card">
         <span class="feature-icon">🎯</span>
         <div class="feature-title">GeoHotSpot Triggers</div>
-        <p class="feature-desc">Embed GeoHotSpot triggers anywhere in your maps — inside quests, as objectives, or standalone. Trigger audio clips, video playback, text overlays, scripting events and NPC spawns at real-world GPS coordinates or specific in-game locations.</p>
+        <p class="feature-desc">Embed GeoHotSpot triggers anywhere in your maps — inside quests, as objectives, or standalone. Trigger audio clips, video playback, text overlays, scripting events and NPC spawns at real-world GPS coordinates or specific in-game locations. Mappers can chain multiple triggers together to build entire questlines that only unlock when players are physically near a real-world location, blending level design with reality in ways no Doom map has ever done before.</p>
       </div>
 
       <div class="feature-card">
         <span class="feature-icon">⚡</span>
         <div class="feature-title">Quick Combat Actions</div>
-        <p class="feature-desc">No time to open your inventory mid-battle? Press <strong style="color:var(--red)">C</strong> to instantly use a health pack or <strong style="color:var(--red)">F</strong> to slam on armour without breaking combat flow. Bank dozens of supplies from farming sessions and deploy them in a single keypress when it matters most.</p>
+        <p class="feature-desc">No time to open your inventory mid-battle? Press <strong style="color:var(--red)">C</strong> to instantly use a health pack or <strong style="color:var(--red)">F</strong> to slam on armour without breaking combat flow. Bank dozens of supplies from farming sessions and deploy them in a single keypress when it matters most. Every hotkey is fully remappable, so speedrunners and competitive players can bind item usage to whatever layout keeps their hands fastest on the keyboard.</p>
       </div>
 
       <div class="feature-card">
@@ -1392,7 +1389,7 @@
       <div class="feature-card">
         <span class="feature-icon">📶</span>
         <div class="feature-title">Offline Play &amp; Sync</div>
-        <p class="feature-desc">Play the full ODOOM experience without an internet connection. Progress, inventory, and quest data sync automatically the moment you reconnect — ideal for poor or intermittent connectivity anywhere in the world.</p>
+        <p class="feature-desc">Play the full ODOOM experience without an internet connection. Progress, inventory, and quest data sync automatically the moment you reconnect — ideal for poor or intermittent connectivity anywhere in the world. Built on the OASIS Hyperdrive's offline-first architecture, so your karma, farmed supplies and quest state are never at risk, even on a multi-day trip off-grid.</p>
       </div>
 
       <div class="feature-card coming-soon">
@@ -1853,6 +1850,18 @@
       </div>
 
       <div class="rm-tile future">
+        <div class="rm-kicker-dim">ON THE HORIZON</div>
+        <div class="rm-title">Mod &amp; Map Marketplace</div>
+        <p class="rm-desc">Publish custom maps, mods and game modes straight to STARNET — versioned, Avatar-signed and monetizable. Creators earn royalties every time their map is downloaded or played.</p>
+      </div>
+
+      <div class="rm-tile future">
+        <div class="rm-kicker-dim">ON THE HORIZON</div>
+        <div class="rm-title">Ranked &amp; Tournament Mode</div>
+        <p class="rm-desc">Competitive ladders, spectator tools and prize-pool tournaments with cross-Omniverse leaderboards — karma and reputation earned in ranked matches carry over to every connected game.</p>
+      </div>
+
+      <div class="rm-tile future">
         <div class="rm-kicker-dim">ALWAYS EVOLVING</div>
         <div class="rm-title" style="color:#a8bfd8">More Hell to Come</div>
         <p class="rm-desc">Cross-game clans, city-scale invasions, real-world tournament integration, OLAND digital land, multiplayer AR battles, OIDE visual quest builder, and much more on the horizon. The gates of Hell have no final level.</p>
@@ -1917,6 +1926,12 @@
           <li><a href="https://github.com/NextGenSoftwareUK/OASIS" target="_blank" rel="noopener">GitHub</a></li>
           <li><a href="https://github.com/NextGenSoftwareUK/OASIS/tree/master/Docs/Devs/API%20Documentation" target="_blank" rel="noopener">API Reference</a></li>
           <li><a href="https://github.com/NextGenSoftwareUK/OASIS/blob/master/Docs/Devs/DEVELOPER_DOCUMENTATION_INDEX.md" target="_blank" rel="noopener">Developer Index</a></li>
+          <li><a href="https://github.com/NextGenSoftwareUK/OASIS/blob/master/Docs/Devs/OASIS_Quick_Start_Guide.md" target="_blank" rel="noopener">Quick Start Guide</a></li>
+          <li><a href="https://github.com/NextGenSoftwareUK/OASIS/blob/master/Docs/Devs/OASIS_ARCHITECTURE_OVERVIEW.md" target="_blank" rel="noopener">Architecture Overview</a></li>
+          <li><a href="https://github.com/NextGenSoftwareUK/OASIS/blob/master/Docs/Devs/DEVELOPMENT_ENVIRONMENT_SETUP.md" target="_blank" rel="noopener">Environment Setup</a></li>
+          <li><a href="https://github.com/NextGenSoftwareUK/OASIS/blob/master/Docs/Devs/OASIS-BEST-PRACTICES.md" target="_blank" rel="noopener">Best Practices</a></li>
+          <li><a href="https://github.com/NextGenSoftwareUK/OASIS/blob/master/Docs/Devs/DOCKER_DEPLOYMENT_GUIDE.md" target="_blank" rel="noopener">Docker Deployment Guide</a></li>
+          <li><a href="https://github.com/NextGenSoftwareUK/OASIS/releases/tag/OASIS-Runtime-v4.5.1" target="_blank" rel="noopener">OASIS Runtime v4.5.1</a></li>
         </ul>
       </div>
       <div>
@@ -1928,9 +1943,16 @@
           <li><a href="https://github.com/NextGenSoftwareUK/OASIS/blob/master/Docs/OUR_WORLD_WHITEPAPER.md" target="_blank" rel="noopener">Our World Whitepaper</a></li>
           <li><a href="https://github.com/NextGenSoftwareUK/OASIS/blob/master/Docs/INVESTOR_EVALUATION_GUIDE.md" target="_blank" rel="noopener">Investor Guide</a></li>
           <li><a href="https://github.com/NextGenSoftwareUK/OASIS/blob/master/Docs/Devs/GETTING_STARTED_INDEX.md" target="_blank" rel="noopener">Getting Started</a></li>
+          <li><a href="https://github.com/NextGenSoftwareUK/OASIS/blob/master/Docs/Devs/STAR_CLI_Comprehensive_Guide.md" target="_blank" rel="noopener">STAR CLI Guide</a></li>
           <li><a href="https://www.oasisweb4.com/holonic-architecture" target="_blank" rel="noopener">Holonic Architecture</a></li>
           <li><a href="https://github.com/NextGenSoftwareUK/OASIS/blob/master/Docs/Devs/WIKI_DOCUMENTATION_INDEX.md" target="_blank" rel="noopener">Wiki</a></li>
           <li><a href="https://www.ourworldthegame.com/blog" target="_blank" rel="noopener">Blog</a></li>
+          <li><a href="https://github.com/NextGenSoftwareUK/OASIS/blob/master/Docs/OASIS_Lite_Paper.md" target="_blank" rel="noopener">OASIS Lite Paper</a></li>
+          <li><a href="https://github.com/NextGenSoftwareUK/OASIS/blob/master/Docs/OASIS_HYPERDRIVE_WHITEPAPER.md" target="_blank" rel="noopener">HyperDrive Whitepaper</a></li>
+          <li><a href="https://github.com/NextGenSoftwareUK/OASIS/blob/master/Docs/OASIS_COSMIC_ORM_WHITEPAPER.md" target="_blank" rel="noopener">Cosmic ORM Whitepaper</a></li>
+          <li><a href="https://github.com/NextGenSoftwareUK/OASIS/blob/master/Docs/OASIS_NFT_SYSTEM_WHITEPAPER.md" target="_blank" rel="noopener">NFT System Whitepaper</a></li>
+          <li><a href="https://github.com/NextGenSoftwareUK/OASIS/blob/master/Docs/OASIS_UNIVERSAL_WALLET_WHITEPAPER.md" target="_blank" rel="noopener">Universal Wallet Whitepaper</a></li>
+          <li><a href="https://github.com/NextGenSoftwareUK/OASIS/blob/master/Docs/OASIS_TECHNOLOGY_SUMMARY_AND_USE_CASES.md" target="_blank" rel="noopener">Use Cases</a></li>
         </ul>
       </div>
       <div>
@@ -1947,9 +1969,9 @@
         <ul class="footer-links">
           <li><a href="https://discord.gg/q9gMKU6" target="_blank" rel="noopener">Discord</a></li>
           <li><a href="https://t.me/oasisweb4chat" target="_blank" rel="noopener">Telegram</a></li>
-          <li><a href="https://x.com/OASISWEB4" target="_blank" rel="noopener">𝕏 OASIS WEB4</a></li>
-          <li><a href="https://x.com/OurWorldTheGame" target="_blank" rel="noopener">𝕏 Our World</a></li>
-          <li><a href="https://x.com/HoloNET_OASIS" target="_blank" rel="noopener">𝕏 HoloNET</a></li>
+          <li><a href="https://x.com/OASISWEB4" target="_blank" rel="noopener">X OASIS WEB4</a></li>
+          <li><a href="https://x.com/OurWorldTheGame" target="_blank" rel="noopener">X Our World</a></li>
+          <li><a href="https://x.com/HoloNET_OASIS" target="_blank" rel="noopener">X HoloNET</a></li>
           <li><a href="https://www.youtube.com/@WEB4OASIS" target="_blank" rel="noopener">YouTube OASIS</a></li>
           <li><a href="https://www.youtube.com/@ourworld-the-game" target="_blank" rel="noopener">YouTube Our World</a></li>
           <li><a href="https://www.youtube.com/channel/UC0_O4RwdY3lq1m3-K-njUxA" target="_blank" rel="noopener">YouTube Our World Legacy</a></li>
@@ -1962,6 +1984,8 @@
           <li><a href="https://github.com/NextGenSoftwareUK/OASIS/issues" target="_blank" rel="noopener">Report an Issue</a></li>
           <li><a href="https://github.com/NextGenSoftwareUK/OASIS/discussions" target="_blank" rel="noopener">Discussions</a></li>
           <li><a href="https://tally.so/r/WOZjNa" target="_blank" rel="noopener">Submit a Support Ticket</a></li>
+          <li><a href="https://github.com/NextGenSoftwareUK/OASIS/blob/master/Docs/Devs/CONTRIBUTING.md" target="_blank" rel="noopener">Contributing</a></li>
+          <li><a href="https://github.com/NextGenSoftwareUK/OASIS/blob/master/Docs/Devs/CODE_OF_CONDUCT.md" target="_blank" rel="noopener">Code of Conduct</a></li>
         </ul>
       </div>
     </div>
