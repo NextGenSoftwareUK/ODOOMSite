@@ -99,19 +99,20 @@
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 2rem;
+      gap: 1rem;
       list-style: none;
     }
 
     .nav-links a {
       font-family: 'Orbitron', sans-serif;
-      font-size: 0.72rem;
+      font-size: 0.62rem;
       font-weight: 600;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.08em;
       color: var(--text);
       text-decoration: none;
       text-transform: uppercase;
       transition: color 0.2s;
+      white-space: nowrap;
     }
 
     .nav-links a:hover { color: var(--red); }
@@ -1014,7 +1015,9 @@
     }
 
     /* Responsive */
-    @media (max-width: 900px) {
+    /* Nav has 12 items - too many to fit even on most desktop screens at full size,
+       so switch to the hamburger well before the general content breakpoint below. */
+    @media (max-width: 1300px) {
       .nav-toggle { display: flex; }
       .nav-links {
         display: none;
@@ -1037,6 +1040,8 @@
       .nav-links li { width: 100%; }
       .nav-links a { display: block; padding: 0.75rem 0; width: 100%; }
       .nav-links li:not(:last-child) a { border-bottom: 1px solid rgba(255, 51, 85, 0.08); }
+    }
+    @media (max-width: 900px) {
       .hero-inner { flex-direction: column; text-align: center; }
       .hero-sub { max-width: 100%; }
       .hero-buttons { justify-content: center; }
