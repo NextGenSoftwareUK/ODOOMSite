@@ -1042,6 +1042,8 @@
       .nav-links li:not(:last-child) a { border-bottom: 1px solid rgba(255, 51, 85, 0.08); }
     }
     @media (max-width: 900px) {
+      .vid-section .section-inner { padding: 0 1rem; }
+      .vid-grid { grid-template-columns: 1fr; }
       .hero-inner { flex-direction: column; text-align: center; }
       .hero-sub { max-width: 100%; }
       .hero-buttons { justify-content: center; }
@@ -1082,6 +1084,7 @@
     }
 
     @media (max-width: 520px) {
+      .vid-section .section-inner { padding: 0 .75rem; }
       .features-grid, .quest-chapters, .ai-modes, .singularity-cards { grid-template-columns: 1fr; }
       .feature-card, .rm-tile, .become-card, .meta-card, .ai-tile, .singularity-card, .chapter-tile { padding: 1.1rem; font-size: 0.95rem; }
       .footer-grid { grid-template-columns: 1fr 1fr; }
