@@ -116,6 +116,7 @@
     }
 
     .nav-links a:hover { color: var(--red); }
+    .nav-links-mobile-only { display: none; }
 
     /* HAMBURGER */
     .nav-toggle {
@@ -1043,6 +1044,8 @@
       .nav-links li { width: 100%; }
       .nav-links a { display: block; padding: 9px 0; width: 100%; }
       .nav-links li:not(:last-child) a { border-bottom: 1px solid rgba(255, 51, 85, 0.08); }
+      .nav-links-mobile-only { display: list-item; }
+      .btn-nav { display: none; }
     }
     @media (max-width: 900px) {
       .vid-section .section-inner { padding: 0 1rem; }
@@ -1239,9 +1242,13 @@
     <li><a href="#realworld">Real World</a></li>
     <li><a href="#ogengine-band">OGEngine</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="https://github.com/NextGenSoftwareUK/OASIS" target="_blank" rel="noopener">GitHub</a></li>
+    <li class="nav-links-mobile-only"><a href="https://github.com/NextGenSoftwareUK/OASIS" target="_blank" rel="noopener">GITHUB</a></li>
+    <li class="nav-links-mobile-only"><a href="https://oasisomniverse.one" target="_blank" rel="noopener">ECOSYSTEM</a></li>
   </ul>
-  <a class="btn-nav" href="https://oasisomniverse.one" target="_blank" rel="noopener">ECOSYSTEM</a>
+  <div style="display:flex;gap:8px;align-items:center">
+    <a class="btn-nav" href="https://github.com/NextGenSoftwareUK/OASIS" target="_blank" rel="noopener">GITHUB</a>
+    <a class="btn-nav" href="https://oasisomniverse.one" target="_blank" rel="noopener">ECOSYSTEM</a>
+  </div>
   <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false" onclick="toggleMenu()">
     <span></span><span></span><span></span>
   </button>
